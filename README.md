@@ -1,5 +1,6 @@
-# **Riley and Ian's Wedding Website**
+# **Ian and Riley's Wedding Website**
 
+![Ian & Riley](/public/images/happyCouple.jpeg)
 
 ## Getting Started
 1. Clone the repo
