@@ -1,0 +1,226 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Countdown from "../components/Countdown";
+import Gallery from "../components/Gallery";
+import RsvpForm from "../components/RsvpForm";
+---
+
+<Layout
+  title="Ian & Riley — We're Getting Married"
+  description="Join Ian & Riley as they celebrate their wedding."
+>
+  <header class="site-header">
+    <a href="#top" class="wordmark">I & R</a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="#story">Our Story</a>
+      <a href="#weekend">Weekend</a>
+      <a href="#details">Details</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#rsvp">RSVP</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-decoration hero-decoration-left"></div>
+      <div class="hero-decoration hero-decoration-right"></div>
+
+      <div class="hero-content">
+        <p class="eyebrow">WE'RE GETTING MARRIED</p>
+
+        <h1>
+          Riley
+          <span>&</span>
+          Ian
+        </h1>
+
+        <p class="hero-date">
+          July 1, 2028 · Merrywood Farm, Oregon
+        </p>
+
+        <Countdown
+          targetDate="2028-07-01T16:00:00-07:00"
+          client:load
+        />
+
+        <a href="#rsvp" class="button button-dark">
+          RSVP
+        </a>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story" class="section section-light">
+      <div class="section-inner story-grid">
+        <div>
+          <p class="eyebrow">OUR STORY</p>
+          <h2>
+            From one chapter<br />
+            to the next.
+          </h2>
+        </div>
+
+        <div class="story-copy">
+          <p>
+            This is where your story goes. Talk about how you met, your first
+            date, the moment you knew, or whatever makes the two of you feel
+            most like yourselves.
+          </p>
+
+          <p>
+            Keep this part personal. The website doesn't need to tell your
+            entire life story — just enough for guests to feel like they're
+            stepping into yours.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEEKEND -->
+    <section id="weekend" class="section section-dark">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="eyebrow">THE WEEKEND</p>
+          <h2>Celebrate with us.</h2>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <div class="timeline-date">
+              <span>FRI</span>
+              <strong>13</strong>
+            </div>
+
+            <div>
+              <p class="timeline-label">7:00 PM</p>
+              <h3>Welcome Drinks</h3>
+              <p>
+                Come grab a drink, say hello, and kick off the weekend with us.
+              </p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-date">
+              <span>SAT</span>
+              <strong>14</strong>
+            </div>
+
+            <div>
+              <p class="timeline-label">4:00 PM</p>
+              <h3>The Ceremony</h3>
+              <p>
+                The main event. Ceremony, cocktails, dinner, dancing, and
+                approximately zero ability to sit still.
+              </p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-date">
+              <span>SUN</span>
+              <strong>15</strong>
+            </div>
+
+            <div>
+              <p class="timeline-label">11:00 AM</p>
+              <h3>Farewell Brunch</h3>
+              <p>
+                One last meal together before everyone heads home.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DETAILS -->
+    <section id="details" class="section section-light">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="eyebrow">DETAILS</p>
+          <h2>Everything you need to know.</h2>
+        </div>
+
+        <div class="details-grid">
+          <article class="detail-card">
+            <span class="detail-number">01</span>
+            <h3>Venue</h3>
+            <p>
+              Merrywood Farm<br />
+              12328 South Casto Road<br />
+              Oregon City, Oregon
+            </p>
+          </article>
+
+          <article class="detail-card">
+            <span class="detail-number">02</span>
+            <h3>Dress Code</h3>
+            <p>
+              Cocktail attire.<br />
+              Jackets encouraged, dancing mandatory.
+            </p>
+          </article>
+
+          <article class="detail-card">
+            <span class="detail-number">03</span>
+            <h3>Travel</h3>
+            <p>
+              Hotel blocks, transportation, airport information, and all the
+              practical details can live here.
+            </p>
+          </article>
+
+          <article class="detail-card">
+            <span class="detail-number">04</span>
+            <h3>Registry</h3>
+            <p>
+              Your registry links can go here once they're ready.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="section section-blush">
+      <div class="section-inner">
+        <div class="section-heading">
+          <p class="eyebrow">A FEW OF OUR FAVORITE MOMENTS</p>
+          <h2>Us, lately.</h2>
+        </div>
+
+        <Gallery client:load />
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section id="rsvp" class="section section-dark">
+      <div class="section-inner rsvp-layout">
+        <div>
+          <p class="eyebrow">RSVP</p>
+
+          <h2>
+            We hope<br />
+            you'll be there.
+          </h2>
+
+          <p class="rsvp-intro">
+            Please respond by July 1, 2027.
+          </p>
+        </div>
+
+        <RsvpForm client:load />
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Ian & Riley · 2027</p>
+    <a href="#top">Back to top ↑</a>
+  </footer>
+</Layout>
