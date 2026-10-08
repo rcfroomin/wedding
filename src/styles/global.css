@@ -489,6 +489,116 @@
   
     overflow: hidden;
   }
+
+  .rsvp-step {
+    max-width: 620px;
+  }
+
+  .rsvp-step-header {
+    margin-bottom: 36px;
+  }
+
+  .rsvp-step-header h3 {
+    margin: 0 0 16px;
+
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .rsvp-step-header p:last-child {
+    max-width: 500px;
+    opacity: 0.65;
+  }
+
+  .rsvp-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .rsvp-option {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 22px 24px;
+
+    border: 1px solid rgba(248, 244, 237, 0.25);
+
+    background: transparent;
+    color: var(--cream);
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .rsvp-option:hover {
+    background: rgba(248, 244, 237, 0.05);
+    border-color: rgba(248, 244, 237, 0.6);
+    transform: translateX(4px);
+  }
+
+  .rsvp-option.selected {
+    background: rgba(248, 244, 237, 0.1);
+    border-color: rgba(248, 244, 237, 0.8);
+  }
+
+  .rsvp-option-title {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+  }
+
+  .rsvp-option-arrow {
+    opacity: 0.6;
+  }
+
+  .rsvp-back {
+    margin-top: 18px;
+
+    padding: 0;
+
+    border: 0;
+
+    background: none;
+    color: var(--cream);
+
+    cursor: pointer;
+
+    font: inherit;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    opacity: 0.55;
+  }
+
+  .rsvp-back:hover {
+    opacity: 1;
+  }
+
+  .rsvp-loading {
+    max-width: 550px;
+  }
+
+  .rsvp-loading h3 {
+    margin: 0;
+
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1;
+  }
   
   .gallery-grid {
     display: grid;
@@ -696,6 +806,14 @@
     .site-footer {
       flex-direction: column;
       gap: 12px;
+    }
+
+    .rsvp-option {
+      padding: 18px;
+    }
+
+    .rsvp-option-title {
+      font-size: 1.15rem;
     }
   }
   
