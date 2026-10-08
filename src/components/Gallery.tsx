@@ -30,6 +30,14 @@ const photos: Photo[] = [
     src: "/images/patio.jpeg",
     alt: "Riley and Ian",
   },
+  {
+    src: "/images/barCheers.jpeg",
+    alt: "Riley and Ian sharing drinks at Condesa",
+  },
+  {
+    src: "/images/sitting.jpeg",
+    alt: "Riley and Ian",
+  },
 ];
 
 export default function Gallery() {
