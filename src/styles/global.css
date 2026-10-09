@@ -1090,3 +1090,31 @@
     background-repeat: no-repeat;
   }
 }
+
+/* Extra-small phones */
+@media (max-width: 380px) {
+  .site-header {
+    padding: 12px 14px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  .wordmark {
+    font-size: 1.1rem;
+  }
+
+  .desktop-nav {
+    justify-content: flex-start;
+    gap: 14px;
+
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+
+    padding-right: 8px;
+  }
+
+  .logout-button {
+    padding: 7px 9px;
+    font-size: 0.58rem;
+  }
+}
