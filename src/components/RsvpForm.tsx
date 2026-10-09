@@ -2,9 +2,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 
 type Step =
-  | "name"
   | "attendance"
-  | "checking"
   | "guestCount"
   | "details"
   | "submitting"
@@ -12,119 +10,93 @@ type Step =
   | "declined"
   | "error";
 
+type Props = {
+  guestName: string;
+  plusOneAllowed: boolean;
+};
+
 type ApiResponse = {
   ok: boolean;
   error?: string;
-  found?: boolean;
-  plusOneAllowed?: boolean;
 };
 
-async function apiRequest(
-  body: Record<string, unknown>
-): Promise<ApiResponse> {
+async function submitRequest(
+  payload: Record<string, unknown>
+): Promise<void> {
   const response = await fetch("/api/rsvp", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(payload),
   });
 
-  const data = await response.json();
+  const data = (await response.json()) as ApiResponse;
 
-  if (!response.ok || !data.ok) {
+  if (!response.ok || data.ok !== true) {
     throw new Error(
-      data.error ?? "Something went wrong."
+      data.error ?? "Your RSVP could not be saved."
     );
   }
-
-  return data;
 }
 
-export default function RsvpForm() {
-  const [step, setStep] = useState<Step>("name");
+export default function RsvpForm({
+  guestName,
+  plusOneAllowed,
+}: Props) {
+  const firstName =
+    guestName.trim().split(/\s+/)[0] || guestName;
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-
-  const [plusOneAllowed, setPlusOneAllowed] =
-    useState(false);
-
+  const [step, setStep] = useState<Step>("attendance");
   const [guestCount, setGuestCount] = useState(1);
-  const [guestName, setGuestName] = useState("");
-
+  const [guestNameInput, setGuestNameInput] = useState("");
+  const [email, setEmail] = useState("");
   const [meal, setMeal] = useState("Chicken");
   const [notes, setNotes] = useState("");
 
-  const [errorMessage, setErrorMessage] =
-    useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorReturnTo, setErrorReturnTo] =
+    useState<Step>("attendance");
 
-  async function handleAttendance(
-    attending: "Yes" | "No"
-  ) {
+  function showError(error: unknown, returnTo: Step) {
+    setErrorMessage(
+      error instanceof Error
+        ? error.message
+        : "Something went wrong. Please try again."
+    );
+
+    setErrorReturnTo(returnTo);
+    setStep("error");
+  }
+
+  async function decline() {
     setErrorMessage("");
-
-    if (attending === "No") {
-      try {
-        setStep("submitting");
-
-        await apiRequest({
-          action: "submit",
-          name,
-          attending: "No",
-        });
-
-        setStep("declined");
-      } catch (error) {
-        console.error(error);
-
-        setErrorMessage(
-          error instanceof Error
-            ? error.message
-            : "Something went wrong."
-        );
-
-        setStep("error");
-      }
-
-      return;
-    }
+    setStep("submitting");
 
     try {
-      setStep("checking");
-
-      const result = await apiRequest({
-        action: "lookup",
-        name,
+      await submitRequest({
+        action: "submit",
+        attending: "No",
+        guestCount: 0,
+        guestName: "",
+        email: "",
+        meal: "",
+        notes: "",
       });
 
-      if (!result.found) {
-        throw new Error(
-          "We couldn't find that name on the guest list. Please check your spelling or contact us."
-        );
-      }
-
-      const allowed =
-        result.plusOneAllowed === true;
-
-      setPlusOneAllowed(allowed);
-      setGuestCount(1);
-
-      if (allowed) {
-        setStep("guestCount");
-      } else {
-        setStep("details");
-      }
+      setStep("declined");
     } catch (error) {
-      console.error(error);
+      showError(error, "attendance");
+    }
+  }
 
-      setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong."
-      );
+  function acceptInvitation() {
+    setGuestCount(1);
 
-      setStep("error");
+    if (plusOneAllowed) {
+      setStep("guestCount");
+    } else {
+      setStep("details");
     }
   }
 
@@ -137,56 +109,33 @@ export default function RsvpForm() {
     setStep("submitting");
 
     try {
-      await apiRequest({
+      await submitRequest({
         action: "submit",
-        name,
-        email,
         attending: "Yes",
         guestCount,
         guestName:
-          guestCount === 2 ? guestName : "",
+          guestCount === 2 ? guestNameInput : "",
+        email,
         meal,
         notes,
       });
 
       setStep("success");
     } catch (error) {
-      console.error(error);
-
-      setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong."
+      showError(
+        error,
+        plusOneAllowed ? "details" : "details"
       );
-
-      setStep("error");
     }
-  }
-
-  function restart() {
-    setStep("name");
-    setName("");
-    setEmail("");
-    setPlusOneAllowed(false);
-    setGuestCount(1);
-    setGuestName("");
-    setMeal("Chicken");
-    setNotes("");
-    setErrorMessage("");
   }
 
   if (step === "success") {
     return (
       <div className="rsvp-success">
         <p className="eyebrow">THANK YOU</p>
-
-        <h3>
-          You're on the list ♡
-        </h3>
-
+        <h3>You're on the list ♡</h3>
         <p>
-          We received your RSVP and cannot wait
-          to celebrate with you.
+          We received your RSVP and cannot wait to celebrate with you.
         </p>
       </div>
     );
@@ -195,72 +144,41 @@ export default function RsvpForm() {
   if (step === "declined") {
     return (
       <div className="rsvp-success">
-        <p className="eyebrow">
-          THANK YOU FOR LETTING US KNOW
-        </p>
-
-        <h3>
-          We'll miss you ♡
-        </h3>
-
+        <p className="eyebrow">THANK YOU FOR LETTING US KNOW</p>
+        <h3>We'll miss you ♡</h3>
         <p>
-          We’re sorry you won’t be able to join us,
+          We're sorry you won't be able to join us,
           but thank you so much for letting us know.
         </p>
       </div>
     );
   }
 
-  if (step === "name") {
+  if (step === "submitting") {
+    return (
+      <div className="rsvp-loading">
+        <p className="eyebrow">ONE MOMENT</p>
+        <h3>Sending your RSVP…</h3>
+      </div>
+    );
+  }
+
+  if (step === "error") {
     return (
       <div className="rsvp-step">
         <div className="rsvp-step-header">
-          <p className="eyebrow">
-            STEP 1 OF 3
-          </p>
-
-          <h3>
-            First things first…
-          </h3>
-
-          <p>
-            What name is your invitation under?
-          </p>
+          <p className="eyebrow">SOMETHING WENT WRONG</p>
+          <h3>We couldn't submit your RSVP.</h3>
+          <p>{errorMessage}</p>
         </div>
 
-        <form
-          className="rsvp-form"
-          onSubmit={(event) => {
-            event.preventDefault();
-
-            if (!name.trim()) return;
-
-            setStep("attendance");
-          }}
+        <button
+          type="button"
+          className="button button-light"
+          onClick={() => setStep(errorReturnTo)}
         >
-          <label>
-            Your name
-
-            <input
-              type="text"
-              value={name}
-              onChange={(event) =>
-                setName(event.target.value)
-              }
-              placeholder="First and last name"
-              autoComplete="name"
-              autoFocus
-              required
-            />
-          </label>
-
-          <button
-            type="submit"
-            className="button button-light"
-          >
-            Continue
-          </button>
-        </form>
+          Try again
+        </button>
       </div>
     );
   }
@@ -269,76 +187,34 @@ export default function RsvpForm() {
     return (
       <div className="rsvp-step">
         <div className="rsvp-step-header">
-          <p className="eyebrow">
-            STEP 2 OF 3
-          </p>
-
-          <h3>
-            Hi, {name.split(" ")[0]}.
-          </h3>
-
-          <p>
-            Will you be joining us?
-          </p>
+          <p className="eyebrow">YOUR INVITATION</p>
+          <h3>Hi, {firstName}.</h3>
+          <p>Will you be joining us?</p>
         </div>
 
         <div className="rsvp-options">
           <button
             type="button"
             className="rsvp-option"
-            onClick={() =>
-              handleAttendance("Yes")
-            }
+            onClick={acceptInvitation}
           >
             <span className="rsvp-option-title">
               Joyfully accepting
             </span>
-
-            <span className="rsvp-option-arrow">
-              →
-            </span>
+            <span className="rsvp-option-arrow">→</span>
           </button>
 
           <button
             type="button"
             className="rsvp-option"
-            onClick={() =>
-              handleAttendance("No")
-            }
+            onClick={decline}
           >
             <span className="rsvp-option-title">
               Regretfully declining
             </span>
-
-            <span className="rsvp-option-arrow">
-              →
-            </span>
+            <span className="rsvp-option-arrow">→</span>
           </button>
         </div>
-
-        <button
-          type="button"
-          className="rsvp-back"
-          onClick={() =>
-            setStep("name")
-          }
-        >
-          ← Back
-        </button>
-      </div>
-    );
-  }
-
-  if (step === "checking") {
-    return (
-      <div className="rsvp-loading">
-        <p className="eyebrow">
-          JUST A MOMENT
-        </p>
-
-        <h3>
-          Checking your invitation…
-        </h3>
       </div>
     );
   }
@@ -347,71 +223,41 @@ export default function RsvpForm() {
     return (
       <div className="rsvp-step">
         <div className="rsvp-step-header">
-          <p className="eyebrow">
-            STEP 3 OF 3
-          </p>
-
-          <h3>
-            Your invitation includes a plus one.
-          </h3>
-
-          <p>
-            How many people will be attending?
-          </p>
+          <p className="eyebrow">YOUR INVITATION</p>
+          <h3>Your invitation includes a plus one.</h3>
+          <p>How many people will be attending?</p>
         </div>
 
         <div className="rsvp-options">
           <button
             type="button"
             className={`rsvp-option ${
-              guestCount === 1
-                ? "selected"
-                : ""
+              guestCount === 1 ? "selected" : ""
             }`}
-            onClick={() =>
-              setGuestCount(1)
-            }
+            onClick={() => setGuestCount(1)}
           >
-            <span>
-              Just me
-            </span>
-
-            <span>
-              {guestCount === 1
-                ? "✓"
-                : ""}
-            </span>
+            <span className="rsvp-option-title">Just me</span>
+            <span>{guestCount === 1 ? "✓" : ""}</span>
           </button>
 
           <button
             type="button"
             className={`rsvp-option ${
-              guestCount === 2
-                ? "selected"
-                : ""
+              guestCount === 2 ? "selected" : ""
             }`}
-            onClick={() =>
-              setGuestCount(2)
-            }
+            onClick={() => setGuestCount(2)}
           >
-            <span>
+            <span className="rsvp-option-title">
               Me + one guest
             </span>
-
-            <span>
-              {guestCount === 2
-                ? "✓"
-                : ""}
-            </span>
+            <span>{guestCount === 2 ? "✓" : ""}</span>
           </button>
         </div>
 
         <button
           type="button"
           className="button button-light"
-          onClick={() =>
-            setStep("details")
-          }
+          onClick={() => setStep("details")}
         >
           Continue
         </button>
@@ -419,9 +265,7 @@ export default function RsvpForm() {
         <button
           type="button"
           className="rsvp-back"
-          onClick={() =>
-            setStep("attendance")
-          }
+          onClick={() => setStep("attendance")}
         >
           ← Back
         </button>
@@ -429,175 +273,82 @@ export default function RsvpForm() {
     );
   }
 
-  if (step === "details") {
-    return (
-      <div className="rsvp-step">
-        <div className="rsvp-step-header">
-          <p className="eyebrow">
-            A FEW MORE DETAILS
-          </p>
+  return (
+    <div className="rsvp-step">
+      <div className="rsvp-step-header">
+        <p className="eyebrow">A FEW MORE DETAILS</p>
+        <h3>We're so glad you're coming.</h3>
 
-          <h3>
-            We're so glad you're coming.
-          </h3>
+        {!plusOneAllowed && (
+          <p>Your invitation is for one guest.</p>
+        )}
+      </div>
 
-          {!plusOneAllowed && (
-            <p>
-              Your invitation is for one guest.
-            </p>
-          )}
-        </div>
+      <form className="rsvp-form" onSubmit={handleSubmit}>
+        <label>
+          Email
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="you@example.com"
+            autoComplete="email"
+            required
+          />
+        </label>
 
-        <form
-          className="rsvp-form"
-          onSubmit={handleSubmit}
-        >
+        {guestCount === 2 && (
           <label>
-            Email
-
+            Your guest's name
             <input
-              type="email"
-              value={email}
+              type="text"
+              value={guestNameInput}
               onChange={(event) =>
-                setEmail(event.target.value)
+                setGuestNameInput(event.target.value)
               }
-              placeholder="you@example.com"
-              autoComplete="email"
+              placeholder="First and last name"
               required
             />
           </label>
+        )}
 
-          {guestCount === 2 && (
-            <label>
-              Your guest's name
-
-              <input
-                type="text"
-                value={guestName}
-                onChange={(event) =>
-                  setGuestName(event.target.value)
-                }
-                placeholder="First and last name"
-                required
-              />
-            </label>
-          )}
-
-          <label>
-            Meal preference
-
-            <select
-              value={meal}
-              onChange={(event) =>
-                setMeal(event.target.value)
-              }
-            >
-              <option value="Chicken">
-                Chicken
-              </option>
-
-              <option value="Fish">
-                Fish
-              </option>
-
-              <option value="Vegetarian">
-                Vegetarian
-              </option>
-            </select>
-          </label>
-
-          <label>
-            Anything else we should know?
-
-            <textarea
-              value={notes}
-              onChange={(event) =>
-                setNotes(event.target.value)
-              }
-              rows={4}
-              placeholder="Dietary restrictions, song requests, etc."
-            />
-          </label>
-
-          <button
-            type="submit"
-            className="button button-light"
+        <label>
+          Meal preference
+          <select
+            value={meal}
+            onChange={(event) => setMeal(event.target.value)}
           >
-            Send RSVP
-          </button>
-        </form>
+            <option value="Chicken">Chicken</option>
+            <option value="Fish">Fish</option>
+            <option value="Vegetarian">Vegetarian</option>
+          </select>
+        </label>
 
-        <button
-          type="button"
-          className="rsvp-back"
-          onClick={() =>
-            setStep(
-              plusOneAllowed
-                ? "guestCount"
-                : "attendance"
-            )
-          }
-        >
-          ← Back
+        <label>
+          Anything else we should know?
+          <textarea
+            rows={4}
+            maxLength={2000}
+            value={notes}
+            onChange={(event) => setNotes(event.target.value)}
+            placeholder="Dietary restrictions, song requests, etc."
+          />
+        </label>
+
+        <button type="submit" className="button button-light">
+          Send RSVP
         </button>
-      </div>
-    );
-  }
+      </form>
 
-  if (
-    step === "submitting" ||
-    step === "error"
-  ) {
-    if (step === "submitting") {
-      return (
-        <div className="rsvp-loading">
-          <p className="eyebrow">
-            ONE MOMENT
-          </p>
-
-          <h3>
-            Sending your RSVP…
-          </h3>
-        </div>
-      );
-    }
-
-    return (
-      <div className="rsvp-step">
-        <div className="rsvp-step-header">
-          <p className="eyebrow">
-            SOMETHING WENT WRONG
-          </p>
-
-          <h3>
-            We couldn't submit your RSVP.
-          </h3>
-
-          <p>
-            {errorMessage}
-          </p>
-        </div>
-
-        <button
-          type="button"
-          className="button button-light"
-          onClick={() =>
-            setStep("details")
-          }
-        >
-          Try again
-        </button>
-
-        <button
-          type="button"
-          className="rsvp-back"
-          onClick={restart}
-        >
-          Start over
-        </button>
-      </div>
-    );
-  }
-
-  return null;
+      <button
+        type="button"
+        className="rsvp-back"
+        onClick={() =>
+          setStep(plusOneAllowed ? "guestCount" : "attendance")
+        }
+      >
+        ← Back
+      </button>
+    </div>
+  );
 }

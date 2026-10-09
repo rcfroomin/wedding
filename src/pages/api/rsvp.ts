@@ -1,167 +1,102 @@
 import type { APIRoute } from "astro";
-
-const SCRIPT_URL = import.meta.env.RSVP_SCRIPT_URL;
-
-type RequestBody = {
-  action?: "lookup" | "submit";
-  name?: string;
-  email?: string;
-  attending?: "Yes" | "No";
-  guestCount?: number;
-  guestName?: string;
-  meal?: string;
-  notes?: string;
-};
+import { callAppsScript } from "../../lib/appsScript";
+import {
+  readGuestSessionFromCookieHeader,
+} from "../../lib/auth";
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "no-store",
     },
   });
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  if (!SCRIPT_URL) {
-    console.error("RSVP_SCRIPT_URL is not configured.");
+  const session = readGuestSessionFromCookieHeader(
+    request.headers.get("cookie")
+  );
 
-    return json(
-      {
-        ok: false,
-        error: "RSVP service is not configured.",
-      },
-      500
-    );
+  if (!session) {
+    return json({
+      ok: false,
+      error: "Your session expired. Please sign in again.",
+    }, 401);
   }
 
-  let body: RequestBody;
+  let body: {
+    action?: string;
+    attending?: string;
+    guestCount?: number;
+    guestName?: string;
+    email?: string;
+    meal?: string;
+    notes?: string;
+  };
 
   try {
     body = await request.json();
   } catch {
-    return json(
-      {
-        ok: false,
-        error: "Invalid request.",
-      },
-      400
-    );
+    return json({
+      ok: false,
+      error: "Invalid RSVP request.",
+    }, 400);
+  }
+
+  if (body.action !== "submit") {
+    return json({
+      ok: false,
+      error: "Invalid RSVP action.",
+    }, 400);
   }
 
   if (
-    body.action !== "lookup" &&
-    body.action !== "submit"
+    body.attending !== "Yes" &&
+    body.attending !== "No"
   ) {
-    return json(
-      {
-        ok: false,
-        error: "Invalid action.",
-      },
-      400
-    );
-  }
-
-  if (!body.name?.trim()) {
-    return json(
-      {
-        ok: false,
-        error: "Name is required.",
-      },
-      400
-    );
-  }
-
-  const params = new URLSearchParams();
-
-  params.set("action", body.action);
-  params.set("name", body.name.trim());
-
-  if (body.action === "submit") {
-    params.set("email", body.email?.trim() ?? "");
-    params.set("attending", body.attending ?? "No");
-    params.set(
-      "guestCount",
-      String(body.guestCount ?? 0)
-    );
-    params.set(
-      "guestName",
-      body.guestName?.trim() ?? ""
-    );
-    params.set("meal", body.meal?.trim() ?? "");
-    params.set("notes", body.notes?.trim() ?? "");
+    return json({
+      ok: false,
+      error: "Please select whether you are attending.",
+    }, 400);
   }
 
   try {
-    const googleResponse = await fetch(SCRIPT_URL, {
-    method: "POST",
-    redirect: "follow",
-    headers: {
-        "Content-Type":
-            "application/x-www-form-urlencoded;charset=UTF-8",
-    },
-    body: params.toString(),
+    const result = await callAppsScript({
+      action: "submit",
+
+      // Identity comes from the encrypted server-verified
+      // session, not from a name supplied by the browser.
+      phone: session.phone,
+      invitationCode: session.invitationCode,
+
+      attending: body.attending,
+      guestCount: String(body.guestCount ?? 0),
+      guestName: String(body.guestName ?? ""),
+      email: String(body.email ?? ""),
+      meal: String(body.meal ?? ""),
+      notes: String(body.notes ?? ""),
     });
 
-    const responseText = await googleResponse.text();
-
-    console.log("Google status:", googleResponse.status);
-    console.log("Google final URL:", googleResponse.url);
-    console.log(
-    "Google content type:",
-    googleResponse.headers.get("content-type")
-    );
-    console.log(
-    "Google response:",
-    responseText.slice(0, 1000)
-    );
-
-    let data: Record<string, unknown>;
-
-    try {
-        data = JSON.parse(responseText);
-    } catch {
-        return json(
-            {
-                ok: false,
-                error:
-                    "RSVP service returned something other than JSON.",
-                debug: {
-                    status: googleResponse.status,
-                    contentType:
-                        googleResponse.headers.get("content-type"),
-                    finalUrl: googleResponse.url,
-                    responsePreview:
-                        responseText.slice(0, 300),
-                },
-            },
-            502
-        );
-    }
-
-    if (!googleResponse.ok || data.ok !== true) {
-      return json(
-        {
-          ok: false,
-          error:
-            typeof data.error === "string"
-              ? data.error
-              : "RSVP service rejected the request.",
-        },
-        400
-      );
-    }
-
-    return json(data);
-  } catch (error) {
-    console.error("RSVP API error:", error);
-
-    return json(
-      {
+    if (result.ok !== true) {
+      return json({
         ok: false,
-        error: "Could not reach RSVP service.",
-      },
-      502
-    );
+        error:
+          typeof result.error === "string"
+            ? result.error
+            : "Your RSVP could not be saved.",
+      }, 400);
+    }
+
+    return json({ ok: true });
+  } catch (error) {
+    console.error("RSVP submission error:", error);
+
+    return json({
+      ok: false,
+      error:
+        "We couldn't save your RSVP right now. Please try again.",
+    }, 502);
   }
 };
