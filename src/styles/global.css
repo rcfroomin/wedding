@@ -758,12 +758,62 @@
     }
     
     .site-header {
-      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "brand logout"
+        "nav nav";
+
+      align-items: center;
+      column-gap: 16px;
+      row-gap: 12px;
+
+      padding: 14px 18px;
+    }
+
+    .wordmark {
+      grid-area: brand;
+      justify-self: start;
+
+      display: inline-block;
+      white-space: nowrap;
+      line-height: 1;
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+
+      text-decoration: none;
     }
   
     .desktop-nav {
-      gap: 12px;
-      font-size: 0.62rem;
+      grid-area: nav;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      width: 100%;
+      min-width: 0;
+
+      gap: 20px;
+      padding: 2px 0 5px;
+
+      overflow-x: auto;
+      white-space: nowrap;
+
+      font-size: 0.65rem;
+      letter-spacing: 0.10em;
+
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .desktop-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .desktop-nav a {
+      flex: 0 0 auto;
+      text-decoration: none;
     }
   
     .hero {
@@ -838,6 +888,22 @@
 
     .rsvp-option-title {
       font-size: 1.15rem;
+    }
+
+    .logout-button {
+      grid-area: logout;
+      justify-self: end;
+
+      margin: 0;
+      padding: 8px 11px;
+
+      white-space: nowrap;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+    }
+
+    section[id] {
+      scroll-margin-top: 115px;
     }
   }
   
