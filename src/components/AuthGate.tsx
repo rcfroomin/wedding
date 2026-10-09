@@ -53,7 +53,7 @@ export default function AuthGate() {
   return (
     <main className="auth-screen">
       <section className="auth-card">
-        <p className="eyebrow">RILEY & IAN</p>
+        <p className="eyebrow">IAN & RILEY</p>
 
         <h1 className="auth-title">
           Your invitation awaits.
