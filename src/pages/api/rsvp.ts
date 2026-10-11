@@ -4,6 +4,21 @@ import {
   readGuestSessionFromCookieHeader,
 } from "../../lib/auth";
 
+type RsvpResponse = {
+  name: string;
+  attending: "Yes" | "No";
+  guestCount: number;
+  guestName?: string;
+  meal?: string;
+};
+
+type RequestBody = {
+  action?: string;
+  email?: string;
+  notes?: string;
+  responses?: RsvpResponse[];
+};
+
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -12,6 +27,15 @@ function json(data: unknown, status = 200) {
       "Cache-Control": "no-store",
     },
   });
+}
+
+function normalizeName(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase();
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -26,15 +50,7 @@ export const POST: APIRoute = async ({ request }) => {
     }, 401);
   }
 
-  let body: {
-    action?: string;
-    attending?: string;
-    guestCount?: number;
-    guestName?: string;
-    email?: string;
-    meal?: string;
-    notes?: string;
-  };
+  let body: RequestBody;
 
   try {
     body = await request.json();
@@ -53,30 +69,145 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   if (
-    body.attending !== "Yes" &&
-    body.attending !== "No"
+    !Array.isArray(body.responses) ||
+    body.responses.length !== session.guests.length
   ) {
     return json({
       ok: false,
-      error: "Please select whether you are attending.",
+      error: "Please provide a response for every invited guest.",
+    }, 400);
+  }
+
+  const guestsByName = new Map(
+    session.guests.map((guest) => [
+      normalizeName(guest.name),
+      guest,
+    ])
+  );
+
+  const seenNames = new Set<string>();
+
+  const responses: RsvpResponse[] = [];
+
+  for (const response of body.responses) {
+    if (
+      !response ||
+      typeof response.name !== "string"
+    ) {
+      return json({
+        ok: false,
+        error: "Invalid guest response.",
+      }, 400);
+    }
+
+    const key = normalizeName(response.name);
+    const guest = guestsByName.get(key);
+
+    if (!guest || seenNames.has(key)) {
+      return json({
+        ok: false,
+        error: "The RSVP contains an unknown or duplicate guest.",
+      }, 400);
+    }
+
+    if (
+      response.attending !== "Yes" &&
+      response.attending !== "No"
+    ) {
+      return json({
+        ok: false,
+        error: `Please select attendance for ${guest.name}.`,
+      }, 400);
+    }
+
+    seenNames.add(key);
+
+    const guestCount = Number(response.guestCount);
+    const guestName = String(response.guestName ?? "").trim();
+    const meal = String(response.meal ?? "").trim();
+
+    if (response.attending === "Yes") {
+      const maximumGuests = guest.plusOneAllowed ? 2 : 1;
+
+      if (
+        !Number.isInteger(guestCount) ||
+        guestCount < 1 ||
+        guestCount > maximumGuests
+      ) {
+        return json({
+          ok: false,
+          error: `${guest.name}'s invitation does not allow that many guests.`,
+        }, 400);
+      }
+
+      if (guestCount === 2 && !guestName) {
+        return json({
+          ok: false,
+          error: `Please enter the additional guest's name for ${guest.name}.`,
+        }, 400);
+      }
+
+      if (
+        !["Chicken", "Fish", "Vegetarian"].includes(meal)
+      ) {
+        return json({
+          ok: false,
+          error: `Please select a meal for ${guest.name}.`,
+        }, 400);
+      }
+    }
+
+    // Use the canonical guest name from the session, not
+    // an arbitrary version supplied in the request.
+    responses.push({
+      name: guest.name,
+      attending: response.attending,
+      guestCount:
+        response.attending === "Yes" ? guestCount : 0,
+      guestName:
+        response.attending === "Yes" && guestCount === 2
+          ? guestName
+          : "",
+      meal:
+        response.attending === "Yes" ? meal : "",
+    });
+  }
+
+  if (seenNames.size !== session.guests.length) {
+    return json({
+      ok: false,
+      error: "Please provide a response for every invited guest.",
+    }, 400);
+  }
+
+  const email = String(body.email ?? "").trim();
+  const notes = String(body.notes ?? "").trim();
+
+  if (notes.length > 2000) {
+    return json({
+      ok: false,
+      error: "Your notes are too long.",
+    }, 400);
+  }
+
+  if (
+    responses.some((response) => response.attending === "Yes") &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ) {
+    return json({
+      ok: false,
+      error: "Please provide a valid email address.",
     }, 400);
   }
 
   try {
     const result = await callAppsScript({
       action: "submit",
-
-      // Identity comes from the encrypted server-verified
-      // session, not from a name supplied by the browser.
       phone: session.phone,
       invitationCode: session.invitationCode,
-
-      attending: body.attending,
-      guestCount: String(body.guestCount ?? 0),
-      guestName: String(body.guestName ?? ""),
-      email: String(body.email ?? ""),
-      meal: String(body.meal ?? ""),
-      notes: String(body.notes ?? ""),
+      email,
+      notes,
+      responses: JSON.stringify(responses),
     });
 
     if (result.ok !== true) {
@@ -89,14 +220,16 @@ export const POST: APIRoute = async ({ request }) => {
       }, 400);
     }
 
-    return json({ ok: true });
+    return json({
+      ok: true,
+      action: "submit",
+    });
   } catch (error) {
     console.error("RSVP submission error:", error);
 
     return json({
       ok: false,
-      error:
-        "We couldn't save your RSVP right now. Please try again.",
+      error: "We couldn't save your RSVP right now. Please try again.",
     }, 502);
   }
 };
