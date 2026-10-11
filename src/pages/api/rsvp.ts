@@ -9,7 +9,6 @@ type RsvpResponse = {
   attending: "Yes" | "No";
   guestCount: number;
   guestName?: string;
-  meal?: string;
 };
 
 type RequestBody = {
@@ -124,7 +123,6 @@ export const POST: APIRoute = async ({ request }) => {
 
     const guestCount = Number(response.guestCount);
     const guestName = String(response.guestName ?? "").trim();
-    const meal = String(response.meal ?? "").trim();
 
     if (response.attending === "Yes") {
       const maximumGuests = guest.plusOneAllowed ? 2 : 1;
@@ -146,15 +144,6 @@ export const POST: APIRoute = async ({ request }) => {
           error: `Please enter the additional guest's name for ${guest.name}.`,
         }, 400);
       }
-
-      if (
-        !["Chicken", "Fish", "Vegetarian"].includes(meal)
-      ) {
-        return json({
-          ok: false,
-          error: `Please select a meal for ${guest.name}.`,
-        }, 400);
-      }
     }
 
     // Use the canonical guest name from the session, not
@@ -168,8 +157,6 @@ export const POST: APIRoute = async ({ request }) => {
         response.attending === "Yes" && guestCount === 2
           ? guestName
           : "",
-      meal:
-        response.attending === "Yes" ? meal : "",
     });
   }
 

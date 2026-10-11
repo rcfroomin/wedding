@@ -13,7 +13,6 @@ type GuestResponse = {
   attending: Attendance;
   guestCount: number;
   guestName: string;
-  meal: string;
 };
 
 type Step =
@@ -55,7 +54,6 @@ export default function RsvpForm({ guests }: Props) {
       attending: null,
       guestCount: 1,
       guestName: "",
-      meal: "Chicken",
     }))
   );
 
@@ -102,7 +100,6 @@ export default function RsvpForm({ guests }: Props) {
       attending,
       guestCount: attending === "Yes" ? 1 : 0,
       guestName: "",
-      meal: "Chicken",
     });
   }
 
@@ -140,10 +137,6 @@ export default function RsvpForm({ guests }: Props) {
           response.attending === "Yes" &&
           response.guestCount === 2
             ? response.guestName.trim()
-            : "",
-        meal:
-          response.attending === "Yes"
-            ? response.meal
             : "",
       }));
 
@@ -232,7 +225,7 @@ export default function RsvpForm({ guests }: Props) {
     return (
       <div className="rsvp-loading">
         <p className="eyebrow">ONE MOMENT</p>
-        <h3>Sending your responses…</h3>
+        <h3>Sending your response…</h3>
       </div>
     );
   }
@@ -345,7 +338,7 @@ export default function RsvpForm({ guests }: Props) {
   return (
     <div className="rsvp-step">
       <div className="rsvp-step-header">
-        <p className="eyebrow">A FEW MORE DETAILS</p>
+        <p className="eyebrow">YOUR INVITATION</p>
 
         <h3>
           We're so glad you're coming.
@@ -436,23 +429,6 @@ export default function RsvpForm({ guests }: Props) {
                   />
                 </label>
               )}
-
-              <label>
-                Meal preference
-
-                <select
-                  value={response.meal}
-                  onChange={(event) =>
-                    updateGuest(response.name, {
-                      meal: event.target.value,
-                    })
-                  }
-                >
-                  <option value="Chicken">Chicken</option>
-                  <option value="Fish">Fish</option>
-                  <option value="Vegetarian">Vegetarian</option>
-                </select>
-              </label>
             </section>
           );
         })}
@@ -473,7 +449,7 @@ export default function RsvpForm({ guests }: Props) {
           type="submit"
           className="button button-light"
         >
-          Submit our responses
+          Submit response
         </button>
       </form>
 
