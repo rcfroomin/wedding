@@ -7,11 +7,15 @@ import {
 export const SESSION_COOKIE = "wedding_session";
 const SESSION_TTL_SECONDS = 12 * 60 * 60;
 
-export type GuestSession = {
+export type SessionGuest = {
   name: string;
+  plusOneAllowed: boolean;
+};
+
+export type GuestSession = {
   phone: string;
   invitationCode: string;
-  plusOneAllowed: boolean;
+  guests: SessionGuest[];
   exp: number;
 };
 
@@ -95,19 +99,29 @@ export function readGuestSession(
     ) as GuestSession;
 
     if (
-      typeof session.name !== "string" ||
       typeof session.phone !== "string" ||
       typeof session.invitationCode !== "string" ||
-      typeof session.plusOneAllowed !== "boolean" ||
       typeof session.exp !== "number" ||
-      session.exp <= Math.floor(Date.now() / 1000)
+      session.exp <= Math.floor(Date.now() / 1000) ||
+      !Array.isArray(session.guests) ||
+      session.guests.length < 1 ||
+      session.guests.length > 20
     ) {
       return null;
     }
 
+    const validGuests = session.guests.every(
+      (guest) =>
+        guest !== null &&
+        typeof guest.name === "string" &&
+        guest.name.trim().length > 0 &&
+        typeof guest.plusOneAllowed === "boolean"
+    );
+
+    if (!validGuests) return null;
+
     return session;
   } catch {
-    // Invalid, expired, or tampered-with cookies are rejected.
     return null;
   }
 }

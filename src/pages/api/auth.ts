@@ -61,45 +61,58 @@ export const POST: APIRoute = async ({ request }) => {
       invitationCode,
     });
 
+    if (result.ok !== true) {
+      throw new Error("Google authentication failed.");
+    }
+
     if (
-      result.ok !== true ||
       result.authenticated !== true ||
-      !result.guest ||
-      typeof result.guest !== "object"
+      !Array.isArray(result.guests)
     ) {
       return json({
         ok: false,
         error:
-          "We couldn't verify those details. Please check the phone number and invitation code on your invitation.",
+          "We couldn't verify those details. Please check your phone number and invitation code.",
       }, 401);
     }
 
-    const guest = result.guest as {
-      name?: string;
-      plusOneAllowed?: boolean;
-    };
+    const guests = result.guests.map((value: unknown) => {
+      if (
+        value === null ||
+        typeof value !== "object"
+      ) {
+        throw new Error("Invalid guest information.");
+      }
 
-    if (
-      typeof guest.name !== "string" ||
-      typeof guest.plusOneAllowed !== "boolean"
-    ) {
-      throw new Error("Invalid guest response.");
+      const guest = value as Record<string, unknown>;
+
+      if (
+        typeof guest.name !== "string" ||
+        typeof guest.plusOneAllowed !== "boolean"
+      ) {
+        throw new Error("Invalid guest information.");
+      }
+
+      return {
+        name: guest.name,
+        plusOneAllowed: guest.plusOneAllowed,
+      };
+    });
+
+    if (guests.length < 1 || guests.length > 20) {
+      throw new Error("Invalid invitation group size.");
     }
 
     const token = createSessionToken({
-      name: guest.name,
       phone,
       invitationCode,
-      plusOneAllowed: guest.plusOneAllowed,
+      guests,
     });
 
     return json(
       {
         ok: true,
-        guest: {
-          name: guest.name,
-          plusOneAllowed: guest.plusOneAllowed,
-        },
+        guests,
       },
       200,
       {

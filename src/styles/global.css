@@ -619,6 +619,126 @@
     font-weight: 400;
     line-height: 1;
   }
+
+  /* GROUP RSVP: INDIVIDUAL ATTENDANCE */
+
+  .rsvp-household-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+
+  .rsvp-person-card {
+    padding: 24px;
+    border: 1px solid rgba(248, 244, 237, 0.22);
+  }
+
+  .rsvp-person-name {
+    margin: 0 0 18px;
+
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  .rsvp-choice-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .rsvp-choice {
+    min-width: 0;
+    min-height: 54px;
+    padding: 12px;
+
+    border: 1px solid rgba(248, 244, 237, 0.25);
+    background: transparent;
+    color: var(--cream);
+
+    cursor: pointer;
+
+    font: inherit;
+    font-size: 0.78rem;
+    line-height: 1.4;
+
+    transition:
+      background 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .rsvp-choice:hover {
+    border-color: rgba(248, 244, 237, 0.7);
+  }
+
+  .rsvp-choice.selected {
+    background: rgba(248, 244, 237, 0.12);
+    border-color: var(--cream);
+  }
+
+  .rsvp-choice:focus-visible {
+    outline: 2px solid var(--cream);
+    outline-offset: 3px;
+  }
+
+  .rsvp-helper {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    opacity: 0.65;
+  }
+
+  .rsvp-person-details {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    margin: 12px 0;
+    padding: 24px 0;
+
+    border-top: 1px solid rgba(248, 244, 237, 0.24);
+  }
+
+  .rsvp-person-details h4 {
+    margin: 0;
+
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    font-weight: 400;
+  }
+
+  .rsvp-person-details label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .rsvp-form input:focus-visible,
+  .rsvp-form select:focus-visible,
+  .rsvp-form textarea:focus-visible {
+    outline: 2px solid var(--cream);
+    outline-offset: 3px;
+  }
+
+  .button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 380px) {
+    .rsvp-person-card {
+      padding: 18px 14px;
+    }
+
+    .rsvp-choice-row {
+      gap: 7px;
+    }
+
+    .rsvp-choice {
+      padding: 10px 7px;
+      font-size: 0.7rem;
+    }
+  }
   
   .gallery-grid {
     display: grid;
