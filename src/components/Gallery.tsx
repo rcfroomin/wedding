@@ -7,35 +7,31 @@ type Photo = {
 
 const photos: Photo[] = [
   {
-    src: "/images/oceanFeet.jpeg",
-    alt: "Riley and Ian's feet in the ocean",
+    src: "/images/petitSoleil.jpeg",
+    alt: "Riley and Ian at Petit Soleil on their engagement moon",
   },
   {
     src: "/images/happyCouple.jpeg",
     alt: "Riley and Ian at the Beach",
   },
   {
-    src: "/images/silly.jpeg",
-    alt: "Engagement photo",
-  },
-  {
-    src: "/images/petitSoleil.jpeg",
-    alt: "Riley and Ian together",
-  },
-  {
-    src: "/images/onTheBar.jpeg",
-    alt: "Engagement photo",
-  },
-  {
     src: "/images/patio.jpeg",
     alt: "Riley and Ian",
   },
   {
-    src: "/images/barCheers.jpeg",
-    alt: "Riley and Ian sharing drinks at Condesa",
+    src: "/images/filmLove.jpeg",
+    alt: "Engagement photo",
+  },
+  {
+    src: "/images/bnwBar.jpeg",
+    alt: "Riley and Ian together",
   },
   {
     src: "/images/sitting.jpeg",
+    alt: "Engagement photo",
+  },
+  {
+    src: "/images/beachCute.jpeg",
     alt: "Riley and Ian",
   },
 ];
