@@ -1768,3 +1768,31 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* Mobile header: keep every navigation link visible */
+@media (max-width: 800px) {
+  .site-header {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .desktop-nav {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-right: 0;
+    white-space: normal;
+    font-size: 0.65rem;
+  }
+
+  .desktop-nav a {
+    flex-shrink: 0;
+  }
+}
