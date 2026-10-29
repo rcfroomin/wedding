@@ -17,6 +17,7 @@ export type GuestSession = {
   invitationCode: string;
   guests: SessionGuest[];
   rehearsalDinnerInvited: boolean;
+  farewellBrunchInvited: boolean;
   exp: number;
 };
 
@@ -103,6 +104,7 @@ export function readGuestSession(
       typeof session.phone !== "string" ||
       typeof session.invitationCode !== "string" ||
       typeof session.rehearsalDinnerInvited !== "boolean" ||
+      typeof session.farewellBrunchInvited !== "boolean" ||
       typeof session.exp !== "number" ||
       session.exp <= Math.floor(Date.now() / 1000) ||
       !Array.isArray(session.guests) ||

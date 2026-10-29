@@ -16,7 +16,7 @@ export const wedding = {
   },
 
   contact: {
-    email: "hello@example.com",
+    email: "rcfroomin@gmail.com",
   },
 
   rsvp: {

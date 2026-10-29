@@ -121,7 +121,7 @@ const guestSession = readGuestSession(
                 </div>
 
                 <div>
-                  <p class="timeline-label">7:00 PM</p>
+                  <p class="timeline-label">6:00 PM</p>
                   <h3>Rehearsal Dinner</h3>
                   <p>
                     We look forward to celebrating with you at our
@@ -148,20 +148,22 @@ const guestSession = readGuestSession(
                 </div>
               </article>
 
-              <article class="timeline-item">
-                <div class="timeline-date">
-                  <span>SUN</span>
-                  <strong>2</strong>
-                </div>
+              {guestSession.farewellBrunchInvited && (
+                <article class="timeline-item">
+                  <div class="timeline-date">
+                    <span>SUN</span>
+                    <strong>2</strong>
+                  </div>
 
-                <div>
-                  <p class="timeline-label">11:00 AM</p>
-                  <h3>Farewell Brunch</h3>
-                  <p>
-                    One last meal together before everyone heads home.
-                  </p>
-                </div>
-              </article>
+                  <div>
+                    <p class="timeline-label">11:00 AM</p>
+                    <h3>Farewell Brunch</h3>
+                    <p>
+                      One last meal together before everyone heads home.
+                    </p>
+                  </div>
+                </article>
+              )}
             </div>
           </div>
         </section>
