@@ -386,22 +386,29 @@
     border: 1px solid var(--line);
   }
   
-  .detail-card {
-    min-height: 280px;
-    padding: 40px;
   
+  .detail-card {
+    min-height: 0;
+    padding: 32px 40px;
+
     background: var(--paper);
   }
-  
+
   .detail-number {
     color: var(--muted);
   }
-  
+
   .detail-card p {
-    max-width: 300px;
+    max-width: none;
     color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
   }
-  
+
+  .detail-card p:last-child {
+    margin-bottom: 0;
+  }
+
   .rsvp-layout {
     display: grid;
     grid-template-columns: 0.8fr 1fr;

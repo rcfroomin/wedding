@@ -103,10 +103,18 @@ export const POST: APIRoute = async ({ request }) => {
       throw new Error("Invalid invitation group size.");
     }
 
+
+    if (typeof result.rehearsalDinnerInvited !== "boolean") {
+      throw new Error(
+        "Authentication response is missing the rehearsal dinner invitation status."
+      );
+    }
+
     const token = createSessionToken({
       phone,
       invitationCode,
       guests,
+      rehearsalDinnerInvited: result.rehearsalDinnerInvited,
     });
 
     return json(

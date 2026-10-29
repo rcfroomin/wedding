@@ -112,6 +112,8 @@ const guestSession = readGuestSession(
             </div>
 
             <div class="timeline">
+              
+            {guestSession.rehearsalDinnerInvited && (
               <article class="timeline-item">
                 <div class="timeline-date">
                   <span>FRI</span>
@@ -120,12 +122,16 @@ const guestSession = readGuestSession(
 
                 <div>
                   <p class="timeline-label">7:00 PM</p>
-                  <h3>Welcome Drinks</h3>
+                  <h3>Rehearsal Dinner</h3>
                   <p>
-                    Come grab a drink, say hello, and kick off the weekend with us.
+                    We look forward to celebrating with you at our
+                    rehearsal dinner and kicking off the wedding weekend
+                    together.
                   </p>
                 </div>
               </article>
+            )}
+
 
               <article class="timeline-item">
                 <div class="timeline-date">
@@ -137,8 +143,7 @@ const guestSession = readGuestSession(
                   <p class="timeline-label">4:00 PM</p>
                   <h3>The Ceremony</h3>
                   <p>
-                    The main event. Ceremony, cocktails, dinner, dancing, and
-                    approximately zero ability to sit still.
+                    Ian and Riley's wedding ceremony, dinner and reception.
                   </p>
                 </div>
               </article>
@@ -180,13 +185,22 @@ const guestSession = readGuestSession(
                 </p>
               </article>
 
+              
               <article class="detail-card">
                 <span class="detail-number">02</span>
                 <h3>Dress Code</h3>
-                <p>
-                  Cocktail attire.<br />
-                  Jackets encouraged, dancing mandatory.
-                </p>
+
+                <div class="detail-description">
+                  <p class="dress-code-label">Garden Party Attire</p>
+
+                  <p>
+                    We invite you to dress in soft pastels, floral prints, and
+                    tea-length or ankle-length dresses for the occasion. For
+                    gentlemen, we’d love to see fun, colorful suits, though
+                    classic black is always welcome, too!
+                  </p>
+
+                </div>
               </article>
 
               <article class="detail-card">
