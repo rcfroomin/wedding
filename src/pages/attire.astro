@@ -1,0 +1,335 @@
+
+---
+import Layout from "../layouts/Layout.astro";
+import AuthGate from "../components/AuthGate";
+import LogoutButton from "../components/LogoutButton";
+import { readGuestSession } from "../lib/auth";
+import { attireProducts } from "../data/attire";
+
+const guestSession = readGuestSession(
+  Astro.cookies.get("wedding_session")?.value
+);
+
+const womenProducts = attireProducts.filter(
+  (product) => product.category === "women"
+);
+
+const menProducts = attireProducts.filter(
+  (product) => product.category === "men"
+);
+
+const accessoryProducts = attireProducts.filter(
+  (product) => product.category === "accessories"
+);
+---
+
+<Layout
+  title="Guest Attire | Ian & Riley"
+  description="Our garden-party wedding attire guide, with outfit inspiration for our guests."
+>
+  {guestSession ? (
+    <>
+      <header class="site-header">
+        <a href="/#top" class="wordmark">I & R</a>
+
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href="/#story">Our Story</a>
+          <a href="/#weekend">Weekend</a>
+          <a href="/#details">Details</a>
+          <a href="/#gallery">Gallery</a>
+          <a href="/attire" aria-current="page">Attire</a>
+          <a href="/#rsvp">RSVP</a>
+        </nav>
+
+        <LogoutButton client:load />
+      </header>
+
+      <main class="attire-page">
+        <!-- EDITORIAL INTRO -->
+        <section class="attire-hero">
+          <p class="eyebrow">IAN & RILEY · JULY 1, 2028</p>
+
+          <h1>
+            A little dressed up.<br />
+            <em>A little in bloom.</em>
+          </h1>
+
+          <p class="attire-hero-copy">
+            A guide to dressing for our garden-party wedding.
+            Think romantic prints and expressive color.
+          </p>
+
+          <a class="attire-scroll-link" href="#womens-attire">
+            Explore the lookbook <span aria-hidden="true">↓</span>
+          </a>
+        </section>
+
+        <!-- DRESS CODE -->
+        <section class="attire-note">
+          <div class="attire-note-heading">
+            <p class="eyebrow">THE DRESS CODE</p>
+            <h2>Garden party attire</h2>
+          </div>
+
+          <div class="attire-note-copy">
+            <p>
+              We'd love to see floral prints, soft pastels,
+              and dresses that fall at tea length or ankle length.
+              Have fun with color, texture, and interesting silhouettes.
+            </p>
+            <p>
+              For the gentlemen, colorful suits are especially
+              welcome. If a classic black suit is more your style,
+              that works beautifully, too.
+            </p>
+            <p>
+                To keep the look festive and elevated, please leave jeans, 
+                short dresses, jumpsuits, and pantsuits for another occasion. 
+                We also kindly ask that guests avoid wearing white or ivory, 
+                and we wanted to share that our bridesmaids will be wearing 
+                sky blue satin so you can plan your look accordingly.
+            </p>
+            <p>
+                Finally, we recommend shoes that are comfortable for walking on grass.
+                 We can't wait to see everyone dressed up for a day in the garden!
+            </p>
+          </div>
+        </section>
+
+        <p class="attire-affiliate-disclosure">
+        Some links in this lookbook may be affiliate links. If you
+        make a purchase through them, we may earn a commission at
+        no additional cost to you.
+        </p>
+
+
+        <!-- WOMEN'S LOOKBOOK -->
+        <section id="womens-attire" class="attire-products-section">
+          <div class="attire-section-heading">
+            <div>
+              <p class="eyebrow">01 / FOR THE LADIES</p>
+              <h2>Pretty in print.</h2>
+            </div>
+            <p>
+              Florals, color, and memorable silhouettes.
+              Look for tea-length or ankle-length hemlines.
+            </p>
+          </div>
+
+          {womenProducts.length > 0 ? (
+            <div class="attire-product-grid">
+              {womenProducts.map((product, index) => (
+                <article class="attire-product" key={product.id}>
+                  <div class="attire-product-image">
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.imageAlt}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="attire-image-placeholder">
+                        <span>LOOK {String(index + 1).padStart(2, "0")}</span>
+                        <p>Add product image</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div class="attire-product-info">
+                    <div>
+                      <p class="attire-product-brand">{product.brand}</p>
+                      <h3>{product.name}</h3>
+                      <p class="attire-product-description">
+                        {product.description}
+                      </p>
+                    </div>
+
+                    <div class="attire-product-bottom">
+                      <span class="attire-product-price">
+                        {product.price}
+                      </span>
+
+                      {product.productUrl ? (
+                        <a
+                          class="attire-shop-link"
+                          href={product.productUrl}
+                          target="_blank"
+                          rel="sponsored noopener noreferrer"
+                        >
+                          Shop the look ↗
+                        </a>
+                      ) : (
+                        <span class="attire-link-placeholder">
+                          Link coming soon
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p class="attire-empty">
+              We're putting together the lookbook. Check back soon.
+            </p>
+          )}
+        </section>
+
+        <!-- MEN'S LOOKBOOK -->
+        <section id="mens-attire" class="attire-products-section attire-mens">
+          <div class="attire-section-heading">
+            <div>
+              <p class="eyebrow">02 / FOR THE GENTLEMEN</p>
+              <h2>Color me classic.</h2>
+            </div>
+            <p>
+              Light neutrals, unexpected suit colors, and
+              playful details. Black suits are also welcome.
+            </p>
+          </div>
+
+          {menProducts.length > 0 ? (
+            <div class="attire-product-grid">
+              {menProducts.map((product, index) => (
+                <article class="attire-product" key={product.id}>
+                  <div class="attire-product-image">
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.imageAlt}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="attire-image-placeholder">
+                        <span>LOOK {String(index + 1).padStart(2, "0")}</span>
+                        <p>Add product image</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div class="attire-product-info">
+                    <div>
+                      <p class="attire-product-brand">{product.brand}</p>
+                      <h3>{product.name}</h3>
+                      <p class="attire-product-description">
+                        {product.description}
+                      </p>
+                    </div>
+
+                    <div class="attire-product-bottom">
+                      <span class="attire-product-price">
+                        {product.price}
+                      </span>
+
+                      {product.productUrl ? (
+                        <a
+                          class="attire-shop-link"
+                          href={product.productUrl}
+                          target="_blank"
+                          rel="sponsored noopener noreferrer"
+                        >
+                          Shop the look ↗
+                        </a>
+                      ) : (
+                        <span class="attire-link-placeholder">
+                          Link coming soon
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p class="attire-empty">
+              Men's outfit inspiration is coming soon.
+            </p>
+          )}
+        </section>
+
+        <!-- OPTIONAL ACCESSORIES -->
+        {accessoryProducts.length > 0 && (
+          <section class="attire-products-section attire-accessories">
+            <div class="attire-section-heading">
+              <div>
+                <p class="eyebrow">03 / THE FINISHING TOUCHES</p>
+                <h2>Details matter.</h2>
+              </div>
+              <p>
+                Accessories and finishing touches to bring
+                your garden-party look together.
+              </p>
+            </div>
+
+            <div class="attire-product-grid">
+              {accessoryProducts.map((product, index) => (
+                <article class="attire-product" key={product.id}>
+                  <div class="attire-product-image">
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.imageAlt}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="attire-image-placeholder">
+                        <span>DETAIL {String(index + 1).padStart(2, "0")}</span>
+                        <p>Add product image</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div class="attire-product-info">
+                    <div>
+                      <p class="attire-product-brand">{product.brand}</p>
+                      <h3>{product.name}</h3>
+                      <p class="attire-product-description">
+                        {product.description}
+                      </p>
+                    </div>
+
+                    <div class="attire-product-bottom">
+                      <span class="attire-product-price">
+                        {product.price}
+                      </span>
+
+                      {product.productUrl ? (
+                        <a
+                          class="attire-shop-link"
+                          href={product.productUrl}
+                          target="_blank"
+                          rel="sponsored noopener noreferrer"
+                        >
+                          Shop the look ↗
+                        </a>
+                      ) : (
+                        <span class="attire-link-placeholder">
+                          Link coming soon
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="attire-closing">
+          <p class="eyebrow">CAN'T WAIT TO CELEBRATE</p>
+          <h2>See you in the garden.</h2>
+          <a class="attire-back-link" href="/#details">
+            Back to wedding details ↑
+          </a>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Ian & Riley · 2028</p>
+        <a href="/#top">Back to home ↑</a>
+      </footer>
+    </>
+  ) : (
+    <AuthGate client:load />
+  )}
+</Layout>
