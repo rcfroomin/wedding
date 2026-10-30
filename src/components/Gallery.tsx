@@ -12,27 +12,43 @@ const photos: Photo[] = [
   },
   {
     src: "/images/happyCouple.jpeg",
-    alt: "Riley and Ian at the Beach",
+    alt: "Riley and Ian together at the beach",
   },
   {
     src: "/images/patio.jpeg",
-    alt: "Riley and Ian",
+    alt: "Riley and Ian together outdoors",
   },
   {
     src: "/images/filmLove.jpeg",
-    alt: "Engagement photo",
+    alt: "Riley and Ian in an engagement photograph",
   },
   {
     src: "/images/bnwBar.jpeg",
-    alt: "Riley and Ian together",
+    alt: "Black-and-white photograph of Riley and Ian together",
   },
   {
     src: "/images/sitting.jpeg",
-    alt: "Engagement photo",
+    alt: "Riley and Ian sitting together",
   },
   {
     src: "/images/beachCute.jpeg",
-    alt: "Riley and Ian",
+    alt: "Riley and Ian by the ocean",
+  },
+  {
+    src: "/images/gettingEngaged.JPG",
+    alt: "Riley and Ian during their engagement",
+  },
+  {
+    src: "/images/handHoldArch.jpeg",
+    alt: "Riley and Ian together beneath an arch",
+  },
+  {
+    src: "/images/soHappy.JPG",
+    alt: "Riley and Ian smiling together",
+  },
+  {
+    src: "/images/dancing.JPG",
+    alt: "Riley and Ian dancing together",
   },
 ];
 
