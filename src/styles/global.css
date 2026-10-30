@@ -1804,14 +1804,14 @@ a {
 ========================================= */
 :root {
   /* Quiet, photo-first palette */
-  --ink: #342d27;
+  --ink: #2B3245;
   --cream: #f3efe7;
   --paper: #faf8f2;
   --blush: #e6dfd3;
   --blue: #b8cbd0;
   --pistachio: #b8b7a3;
   --muted: #766f66;
-  --line: rgba(52, 45, 39, 0.16);
+  --line: rgba(43, 50, 69, 0.16);
   --serif: "Bodoni Moda", "Playfair Display", Georgia, serif;
   --sans: "DM Sans", Arial, sans-serif;
 }
@@ -1979,5 +1979,94 @@ body {
 
   .hero .countdown-unit {
     min-width: 42px;
+  }
+}
+
+
+/* Our Story: one prominent engagement portrait with restrained mid-century framing */
+.story-grid {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(42px, 7vw, 100px);
+}
+
+.story-feature {
+  position: relative;
+  min-width: 0;
+}
+
+.story-feature::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 54px;
+  height: 54px;
+  border-top: 1px solid var(--blue);
+  border-right: 1px solid var(--blue);
+  pointer-events: none;
+}
+
+.story-feature .eyebrow {
+  color: var(--muted);
+}
+
+.story-feature h2 {
+  margin-bottom: 34px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+}
+
+.story-photo-frame {
+  position: relative;
+  margin: 0;
+  padding: 12px;
+  background: var(--paper);
+  border: 1px solid rgba(43, 50, 69, 0.16);
+  box-shadow: 9px 9px 0 rgba(184, 203, 208, 0.55);
+}
+
+.story-photo-frame::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  bottom: -8px;
+  width: 42px;
+  height: 42px;
+  border-left: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  pointer-events: none;
+}
+
+.story-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 48%;
+}
+
+.story-copy {
+  max-width: 650px;
+}
+
+@media (max-width: 800px) {
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .story-feature h2 {
+    margin-bottom: 26px;
+  }
+
+  .story-photo-frame {
+    max-width: 560px;
+  }
+
+  .story-copy {
+    max-width: none;
   }
 }
