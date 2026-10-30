@@ -2,7 +2,7 @@
 
 ![Ian & Riley](/public/images/happyCouple.jpeg)
 
-Our wedding website built with Astro, React, and Vercel. The site includes a guest authentication flow, RSVP collection, countdown timer, gallery, and a polished event landing page for our wedding weekend.
+Our wedding website is built with Astro, React, and Vercel. The site includes a guest authentication flow, RSVP collection, countdown timer, gallery, and a polished event landing page for our wedding weekend.
 
 ## Overview
 
