@@ -780,14 +780,14 @@ a {
   content: "";
   position: absolute;
   z-index: -1;
-  top: 210px;
-  right: clamp(45px, 8vw, 115px);
-  width: clamp(58px, 7vw, 92px);
-  aspect-ratio: 1;
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 9px var(--cream), inset 0 0 0 11px var(--ink);
-  opacity: 0.85;
+  top: 220px;
+  right: clamp(42px, 7vw, 104px);
+  width: clamp(86px, 11vw, 146px);
+  height: clamp(48px, 6vw, 78px);
+  background: var(--ink);
+  clip-path: polygon(0 8%, 56% 8%, 100% 50%, 56% 92%, 34% 92%, 76% 50%, 34% 8%);
+  transform: rotate(-18deg);
+  opacity: 0.9;
 }
 
 #gallery .section-heading {
@@ -952,13 +952,12 @@ a {
   position: absolute;
   z-index: 2;
   right: -10px;
-  bottom: 16px;
-  width: 26px;
-  height: 26px;
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  background: var(--paper);
-  box-shadow: inset 0 0 0 5px var(--paper), inset 0 0 0 7px var(--blue);
+  bottom: 18px;
+  width: 34px;
+  height: 22px;
+  background: var(--blue);
+  clip-path: polygon(0 0, 60% 0, 100% 50%, 60% 100%, 36% 100%, 76% 50%, 36% 0);
+  transform: rotate(18deg);
 }
 
 /* Editorial color bars create a printed-magazine rhythm */
@@ -1165,9 +1164,18 @@ a {
   }
 
   #gallery::after {
-    top: 158px;
-    right: 42px;
-    width: 42px;
+    top: 172px;
+    right: 36px;
+    width: 66px;
+    height: 38px;
+  }
+
+  .weekend-photo:not(.weekend-photo-wide) img[src*="barCheers"] {
+    object-position: center 18%;
+  }
+
+  .gallery-item-11 img {
+    object-position: center 82%;
   }
 
   #gallery .section-heading h2 {
@@ -2352,6 +2360,17 @@ body {
 
 .weekend-photo-wide img {
   aspect-ratio: 5 / 4;
+}
+
+/* Keep faces comfortably inside the tighter mobile crop. */
+.weekend-photo:not(.weekend-photo-wide) img[src*="barCheers"] {
+  object-position: center 24%;
+}
+
+/* The final gallery frame is a water-level composition; bias the crop downward
+   so Riley and Ian remain in view on wide desktop cards. */
+.gallery-item-11 img {
+  object-position: center 78%;
 }
 
 .section-weekend .timeline {
