@@ -2070,3 +2070,131 @@ body {
     max-width: none;
   }
 }
+
+
+/* Weekend section: photo-led editorial triptych and quiet mid-century geometry */
+.section-weekend {
+  background: var(--paper);
+  color: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.section-weekend .section-heading {
+  position: relative;
+  margin-bottom: clamp(34px, 5vw, 58px);
+}
+
+.section-weekend .section-heading::after {
+  content: "";
+  display: block;
+  width: 74px;
+  height: 2px;
+  margin-top: 25px;
+  background: var(--blue);
+}
+
+.section-weekend .section-heading .eyebrow {
+  color: var(--muted);
+}
+
+.weekend-photo-strip {
+  display: grid;
+  grid-template-columns: 1.15fr 0.9fr 0.9fr;
+  gap: clamp(10px, 1.6vw, 22px);
+  align-items: stretch;
+  margin-bottom: clamp(48px, 7vw, 82px);
+}
+
+.weekend-photo {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 8px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+}
+
+.weekend-photo::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 14px;
+  width: 32px;
+  height: 9px;
+  border-top: 2px solid var(--blue);
+}
+
+.weekend-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.weekend-photo-wide img {
+  aspect-ratio: 5 / 4;
+}
+
+.section-weekend .timeline {
+  border-top-color: var(--line);
+}
+
+.section-weekend .timeline-item {
+  border-bottom-color: var(--line);
+}
+
+.section-weekend .timeline-date span,
+.section-weekend .timeline-label {
+  color: var(--muted);
+}
+
+.section-weekend .timeline-item p:last-child {
+  color: var(--muted);
+  opacity: 1;
+}
+
+@media (max-width: 800px) {
+  .weekend-photo-strip {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 10px;
+    margin-bottom: 44px;
+  }
+
+  .weekend-photo:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .weekend-photo img {
+    min-height: 0;
+    aspect-ratio: 5 / 4;
+  }
+
+  .weekend-photo-wide img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .section-weekend .timeline-item {
+    grid-template-columns: 74px 1fr;
+    gap: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .weekend-photo-strip {
+    gap: 8px;
+  }
+
+  .weekend-photo {
+    padding: 5px;
+  }
+
+  .section-weekend .timeline-item {
+    grid-template-columns: 58px 1fr;
+    gap: 16px;
+    padding: 30px 0;
+  }
+}
