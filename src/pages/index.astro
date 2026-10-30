@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import AuthGate from "../components/AuthGate";
 import LogoutButton from "../components/LogoutButton";
 import Countdown from "../components/Countdown";
-import Gallery from "../components/Gallery";
 import RsvpForm from "../components/RsvpForm";
 import { readGuestSession } from "../lib/auth";
 
@@ -25,7 +24,7 @@ const guestSession = readGuestSession(
           <a href="#story">Our Story</a>
           <a href="#weekend">Weekend</a>
           <a href="#details">Details</a>
-          <a href="#gallery">Gallery</a>
+          <a href="/gallery">Gallery</a>
           <a href="/attire">Attire</a>
           <a href="#rsvp">RSVP</a>
         </nav>
@@ -251,13 +250,14 @@ const guestSession = readGuestSession(
 
         <!-- GALLERY -->
         <section id="gallery" class="section section-blush">
-          <div class="section-inner">
+          <div class="section-inner homepage-gallery-teaser">
             <div class="section-heading">
               <p class="eyebrow">A FEW OF OUR FAVORITE MOMENTS</p>
               <h2>Us, lately.</h2>
             </div>
-
-            <Gallery client:load />
+            <a class="gallery-page-link" href="/gallery">
+              Explore the gallery <span aria-hidden="true">↗</span>
+            </a>
           </div>
         </section>
 
