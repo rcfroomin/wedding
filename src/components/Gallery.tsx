@@ -11,14 +11,6 @@ const photos: Photo[] = [
     alt: "Riley and Ian at Petit Soleil on their engagement moon",
   },
   {
-    src: "/images/happyCouple.jpeg",
-    alt: "Riley and Ian together at the beach",
-  },
-  {
-    src: "/images/patio.jpeg",
-    alt: "Riley and Ian together outdoors",
-  },
-  {
     src: "/images/filmLove.jpeg",
     alt: "Riley and Ian in an engagement photograph",
   },
@@ -47,8 +39,16 @@ const photos: Photo[] = [
     alt: "Riley and Ian smiling together",
   },
   {
-    src: "/images/dancing.JPG",
-    alt: "Riley and Ian dancing together",
+    src: "/images/barLookBack.jpeg",
+    alt: "Riley and Ian enjoying a night out together",
+  },
+  {
+    src: "/images/booth.jpg",
+    alt: "Riley and Ian holding hands by the ocean",
+  },
+  {
+    src: "/images/inTheWater.jpeg",
+    alt: "Riley and Ian celebrating their engagement by the water",
   },
 ];
 
