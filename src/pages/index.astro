@@ -37,20 +37,21 @@ const guestSession = readGuestSession(
 
         <!-- HERO -->
         <section class="hero">
-          <div class="hero-decoration hero-decoration-left"></div>
-          <div class="hero-decoration hero-decoration-right"></div>
-
           <div class="hero-content">
-            <p class="eyebrow">WE'RE GETTING MARRIED</p>
+            <p class="eyebrow">A SUMMER CELEBRATION · JULY 1, 2028</p>
 
+            <p class="hero-kicker">The wedding of</p>
             <h1>
               Ian
               <span>&</span>
               Riley
             </h1>
 
+            <div class="hero-rule" aria-hidden="true"></div>
+
             <p class="hero-date">
-              July 1, 2028 · Merrywood Farm, Oregon
+              MERRYWOOD FARM<br />
+              OREGON CITY, OREGON
             </p>
 
             <Countdown
@@ -59,8 +60,20 @@ const guestSession = readGuestSession(
             />
 
             <a href="#rsvp" class="button button-light">
-              RSVP
+              Kindly reply <span aria-hidden="true">↗</span>
             </a>
+
+            <p class="hero-footnote">WE CAN'T WAIT TO CELEBRATE WITH YOU</p>
+          </div>
+
+          <div class="hero-photo-wrap">
+            <img
+              class="hero-photo"
+              src="/images/cameraCouple.jpg"
+              alt="Riley and Ian together during their engagement photo session"
+              fetchpriority="high"
+            />
+            <span class="hero-photo-caption">A little preview of forever</span>
           </div>
         </section>
 
