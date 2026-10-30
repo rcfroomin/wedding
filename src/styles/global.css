@@ -1803,14 +1803,15 @@ a {
    First pass: palette, typography, homepage hero
 ========================================= */
 :root {
-  --ink: #26343a;
-  --cream: #fffff5;
-  --paper: #fffff5;
-  --blush: #fae8f3;
-  --blue: #d3eaf0;
-  --pistachio: #f0ffad;
-  --muted: #68757a;
-  --line: rgba(38, 52, 58, 0.17);
+  /* Photo-led summer palette: linen, warm stone, espresso, sage and ocean blue */
+  --ink: #342820;
+  --cream: #f5f1e8;
+  --paper: #fbf8f1;
+  --blush: #e7d9c8;
+  --blue: #b7d0d9;
+  --pistachio: #a8ad91;
+  --muted: #766b60;
+  --line: rgba(52, 40, 32, 0.18);
   --serif: "Bodoni Moda", "Playfair Display", Georgia, serif;
   --sans: "DM Sans", Arial, sans-serif;
 }
@@ -1822,7 +1823,7 @@ body {
 
 .site-header {
   padding: 18px 5vw;
-  background: rgba(255, 255, 245, 0.94);
+  background: rgba(245, 241, 232, 0.94);
   border-bottom: 1px solid rgba(38, 52, 58, 0.12);
   backdrop-filter: blur(14px);
 }
@@ -1844,7 +1845,7 @@ body {
 }
 
 .desktop-nav a:hover {
-  color: #9b6683;
+  color: #648b99;
   opacity: 1;
 }
 
@@ -1852,7 +1853,8 @@ body {
 .hero {
   min-height: 100svh;
   display: grid;
-  grid-template-columns: minmax(360px, 0.82fr) minmax(0, 1.18fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  place-items: stretch;
   align-items: stretch;
   gap: 0;
   padding: 92px 4vw 34px;
@@ -1861,6 +1863,10 @@ body {
 }
 
 .hero-content {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  justify-self: stretch;
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -1868,7 +1874,7 @@ body {
   justify-content: center;
   max-width: none;
   padding: clamp(38px, 6vw, 92px);
-  background: var(--blush);
+  background: var(--paper);
   color: var(--ink);
   text-align: left;
 }
@@ -1968,6 +1974,7 @@ body {
 
 .hero-photo-wrap {
   position: relative;
+  width: 100%;
   min-width: 0;
   min-height: 620px;
   overflow: hidden;
@@ -2062,7 +2069,8 @@ body {
 @media (max-width: 800px) {
   .hero {
     min-height: auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    place-items: stretch;
     padding: 76px 16px 18px;
   }
 
