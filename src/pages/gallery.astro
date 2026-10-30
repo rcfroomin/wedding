@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/Layout.astro";
+import AuthGate from "../components/AuthGate";
+import LogoutButton from "../components/LogoutButton";
+import Gallery from "../components/Gallery";
+import { readGuestSession } from "../lib/auth";
+
+const guestSession = readGuestSession(
+  Astro.cookies.get("wedding_session")?.value
+);
+---
+
+<Layout
+  title="Gallery | Ian & Riley"
+  description="A few of our favorite moments."
+>
+  {guestSession ? (
+    <>
+      <header class="site-header">
+        <a href="/#top" class="wordmark">I & R</a>
+
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href="/#story">Our Story</a>
+          <a href="/#weekend">Weekend</a>
+          <a href="/#details">Details</a>
+          <a href="/gallery" aria-current="page">Gallery</a>
+          <a href="/attire">Attire</a>
+          <a href="/#rsvp">RSVP</a>
+        </nav>
+
+        <LogoutButton client:load />
+      </header>
+
+      <main id="gallery-page">
+        <section id="gallery" class="gallery-page-section">
+          <div class="gallery-page-intro">
+            <p class="eyebrow">A FEW OF OUR FAVORITE MOMENTS</p>
+            <h1>Us, lately.</h1>
+            <div class="gallery-intro-rule" aria-hidden="true"></div>
+          </div>
+
+          <div class="gallery-page-collage">
+            <span class="gallery-orbit gallery-orbit-one" aria-hidden="true"></span>
+            <span class="gallery-orbit gallery-orbit-two" aria-hidden="true"></span>
+            <span class="gallery-arch" aria-hidden="true"></span>
+            <Gallery client:load />
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Ian & Riley · 2028</p>
+        <a href="/#top">Back to home ↑</a>
+      </footer>
+    </>
+  ) : (
+    <AuthGate client:load />
+  )}
+</Layout>
