@@ -1803,15 +1803,15 @@ a {
    First pass: palette, typography, homepage hero
 ========================================= */
 :root {
-  /* Photo-led summer palette: linen, warm stone, espresso, sage and ocean blue */
-  --ink: #342820;
-  --cream: #f5f1e8;
-  --paper: #fbf8f1;
-  --blush: #e7d9c8;
-  --blue: #b7d0d9;
-  --pistachio: #a8ad91;
-  --muted: #766b60;
-  --line: rgba(52, 40, 32, 0.18);
+  /* Quiet, photo-first palette */
+  --ink: #342d27;
+  --cream: #f3efe7;
+  --paper: #faf8f2;
+  --blush: #e6dfd3;
+  --blue: #b8cbd0;
+  --pistachio: #b8b7a3;
+  --muted: #766f66;
+  --line: rgba(52, 45, 39, 0.16);
   --serif: "Bodoni Moda", "Playfair Display", Georgia, serif;
   --sans: "DM Sans", Arial, sans-serif;
 }
@@ -1823,7 +1823,7 @@ body {
 
 .site-header {
   padding: 18px 5vw;
-  background: rgba(245, 241, 232, 0.94);
+  background: rgba(243, 239, 231, 0.94);
   border-bottom: 1px solid rgba(38, 52, 58, 0.12);
   backdrop-filter: blur(14px);
 }
@@ -1845,162 +1845,59 @@ body {
 }
 
 .desktop-nav a:hover {
-  color: #648b99;
+  color: #718f98;
   opacity: 1;
 }
 
-/* The hero is intentionally split like a fashion-editorial cover. */
+/* Return to the original ocean-feet hero composition.
+   Keep the existing copy and let the updated typefaces do the redesign work. */
 .hero {
   min-height: 100svh;
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  place-items: stretch;
-  align-items: stretch;
-  gap: 0;
-  padding: 92px 4vw 34px;
+  position: relative;
   overflow: hidden;
-  background: var(--cream);
+  display: grid;
+  place-items: center;
+  padding: 140px 24px 100px;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.25) 55%,
+      rgba(0, 0, 0, 0.4) 100%
+    ),
+    url("/images/oceanFeet.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hero-content {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  justify-self: stretch;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  max-width: none;
-  padding: clamp(38px, 6vw, 92px);
-  background: var(--paper);
-  color: var(--ink);
-  text-align: left;
-}
-
-.hero .eyebrow {
-  margin-bottom: 34px;
-  color: var(--muted);
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-}
-
-.hero-kicker {
-  margin: 0 0 10px;
-  color: var(--muted);
-  font-family: var(--serif);
-  font-size: clamp(1.35rem, 2.2vw, 2rem);
-  font-style: italic;
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  text-align: center;
 }
 
 .hero h1 {
-  color: var(--ink);
-  font-size: clamp(4.4rem, 8.5vw, 8.6rem);
-  line-height: 0.82;
-  letter-spacing: -0.075em;
+  font-family: var(--serif);
   font-weight: 400;
 }
 
 .hero h1 span {
-  display: block;
-  margin: 0.12em 0 0.08em 0.08em;
-  color: #9b6683;
-  font-size: 0.36em;
-  line-height: 0.9;
-}
-
-.hero-rule {
-  width: 54px;
-  height: 1px;
-  margin: 34px 0 22px;
-  background: currentColor;
-  opacity: 0.45;
-}
-
-.hero-date {
-  margin: 0 0 26px;
-  color: var(--ink);
-  font-size: 0.7rem;
-  line-height: 1.9;
-  letter-spacing: 0.16em;
-}
-
-.hero .countdown {
-  justify-content: flex-start;
-  gap: clamp(12px, 2vw, 24px);
-  margin: 0 0 30px;
-  color: var(--ink);
-}
-
-.hero .countdown-unit {
-  min-width: 48px;
-}
-
-.hero .countdown-unit strong {
   font-family: var(--serif);
-  font-size: clamp(1.65rem, 2.6vw, 2.35rem);
 }
 
+.hero-date,
+.hero .eyebrow,
+.hero .countdown,
 .hero .countdown-unit span {
-  color: var(--muted);
-  font-size: 0.54rem;
-  letter-spacing: 0.12em;
+  color: var(--paper);
 }
 
 .hero .button-light {
-  min-height: 46px;
-  padding: 0 22px;
-  gap: 12px;
-  border: 1px solid var(--ink);
-  border-radius: 0;
-  background: var(--ink);
-  color: var(--cream);
-  font-size: 0.64rem;
-  letter-spacing: 0.13em;
-}
-
-.hero .button-light:hover {
-  background: transparent;
+  background: var(--cream);
   color: var(--ink);
-}
-
-.hero-footnote {
-  margin: 32px 0 0;
-  color: var(--muted);
-  font-size: 0.56rem;
-  letter-spacing: 0.15em;
-}
-
-.hero-photo-wrap {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-  min-height: 620px;
-  overflow: hidden;
-  background: var(--blue);
-}
-
-.hero-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: center 45%;
-}
-
-.hero-photo-caption {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  padding: 9px 13px;
-  background: rgba(255, 255, 245, 0.9);
-  color: var(--ink);
-  font-family: var(--serif);
-  font-size: 0.9rem;
-  font-style: italic;
+  border-radius: 999px;
 }
 
 .section {
@@ -2012,7 +1909,7 @@ body {
 }
 
 .section-dark {
-  background: var(--blue);
+  background: var(--paper);
   color: var(--ink);
 }
 
@@ -2022,7 +1919,7 @@ body {
 }
 
 .section-blush {
-  background: var(--pistachio);
+  background: var(--blush);
 }
 
 .section-heading h2,
@@ -2062,49 +1959,8 @@ body {
 }
 
 .site-footer {
-  background: var(--blush);
+  background: var(--paper);
   color: var(--ink);
-}
-
-@media (max-width: 800px) {
-  .hero {
-    min-height: auto;
-    grid-template-columns: minmax(0, 1fr);
-    place-items: stretch;
-    padding: 76px 16px 18px;
-  }
-
-  .hero-content {
-    padding: 56px clamp(24px, 8vw, 54px) 44px;
-  }
-
-  .hero .eyebrow {
-    margin-bottom: 26px;
-    font-size: 0.56rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(4.5rem, 18vw, 7rem);
-  }
-
-  .hero-photo-wrap {
-    min-height: 0;
-    aspect-ratio: 4 / 5;
-  }
-
-  .hero-photo-caption {
-    right: 12px;
-    bottom: 12px;
-    font-size: 0.8rem;
-  }
-
-  .hero-footnote {
-    margin-top: 25px;
-  }
-
-  .section-dark:has(.rsvp-layout) {
-    background: var(--ink);
-  }
 }
 
 @media (max-width: 420px) {
