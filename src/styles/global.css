@@ -2432,3 +2432,285 @@ body {
     padding: 30px 0;
   }
 }
+
+
+/* Homepage gallery invitation: a clean doorway to the full editorial spread */
+.homepage-gallery-teaser {
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.gallery-page-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.gallery-page-link span {
+  font-size: 1.1rem;
+  transition: transform 180ms ease;
+}
+
+.gallery-page-link:hover span {
+  transform: translate(3px, -3px);
+}
+
+/* Dedicated gallery page: a playful 1960s magazine spread */
+#gallery-page {
+  min-height: 100vh;
+  padding-top: 82px;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.gallery-page-section {
+  position: relative;
+  padding: clamp(58px, 8vw, 112px) clamp(18px, 5vw, 76px) 110px;
+  isolation: isolate;
+}
+
+.gallery-page-intro {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto clamp(42px, 6vw, 82px);
+  text-align: center;
+}
+
+.gallery-page-intro .eyebrow {
+  color: var(--muted);
+  letter-spacing: 0.2em;
+}
+
+.gallery-page-intro h1 {
+  margin: 18px 0 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(5rem, 13vw, 11rem);
+  font-weight: 400;
+  letter-spacing: -0.09em;
+  line-height: 0.8;
+}
+
+.gallery-intro-rule {
+  width: 88px;
+  height: 5px;
+  margin: 34px auto 0;
+  background: var(--blue);
+  transform: skewX(-32deg);
+}
+
+.gallery-page-collage {
+  position: relative;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 22px 12px 40px;
+}
+
+.gallery-page-collage::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -42px;
+  left: 2%;
+  width: 190px;
+  height: 190px;
+  background: var(--blue);
+  clip-path: polygon(50% 0, 61% 31%, 94% 12%, 72% 43%, 100% 58%, 65% 65%, 78% 100%, 50% 73%, 22% 100%, 35% 65%, 0 58%, 28% 43%, 6% 12%, 39% 31%);
+  transform: rotate(-12deg);
+}
+
+.gallery-page-collage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: 3%;
+  bottom: 2%;
+  width: 240px;
+  height: 110px;
+  background: var(--ink);
+  clip-path: polygon(0 0, 56% 0, 100% 50%, 56% 100%, 34% 100%, 76% 50%, 34% 0);
+  transform: rotate(14deg);
+}
+
+.gallery-page-collage .gallery-grid {
+  grid-auto-rows: clamp(38px, 4.8vw, 68px);
+  gap: clamp(14px, 2vw, 26px);
+}
+
+.gallery-page-collage .gallery-item {
+  padding: 11px;
+  border: 1px solid var(--ink);
+  box-shadow: 9px 9px 0 var(--blue);
+  background: var(--paper);
+}
+
+.gallery-page-collage .gallery-item img {
+  background: var(--paper);
+}
+
+/* Arch and oval masks create magazine-style cut-out moments without editing source photos. */
+.gallery-page-collage .gallery-item-2 img,
+.gallery-page-collage .gallery-item-7 img {
+  clip-path: inset(0 round 48% 48% 3px 3px);
+}
+
+.gallery-page-collage .gallery-item-4 img,
+.gallery-page-collage .gallery-item-9 img {
+  clip-path: polygon(10% 0, 90% 0, 100% 12%, 100% 88%, 90% 100%, 10% 100%, 0 88%, 0 12%);
+}
+
+.gallery-page-collage .gallery-item-6 {
+  box-shadow: 9px 9px 0 var(--ink);
+}
+
+.gallery-page-collage .gallery-item-8 {
+  border-radius: 48% 48% 4px 4px;
+  overflow: hidden;
+}
+
+.gallery-page-collage .gallery-item-8 img {
+  border-radius: 48% 48% 2px 2px;
+}
+
+.gallery-page-collage .gallery-item-1::before,
+.gallery-page-collage .gallery-item-6::before,
+.gallery-page-collage .gallery-item-8::before {
+  top: -24px;
+  width: 58px;
+  height: 58px;
+}
+
+.gallery-page-collage .gallery-item-3::after,
+.gallery-page-collage .gallery-item-9::after {
+  width: 48px;
+  height: 28px;
+}
+
+.gallery-orbit {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.gallery-orbit-one {
+  top: 28%;
+  left: -20px;
+  width: 110px;
+  height: 42px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  transform: rotate(-35deg);
+}
+
+.gallery-orbit-two {
+  right: -4px;
+  top: 57%;
+  width: 70px;
+  height: 70px;
+  border: 2px solid var(--blue);
+  border-radius: 50%;
+  box-shadow: 8px 8px 0 -5px var(--cream), 8px 8px 0 -3px var(--ink);
+}
+
+.gallery-arch {
+  position: absolute;
+  z-index: 0;
+  top: 4%;
+  right: 10%;
+  width: 90px;
+  height: 150px;
+  border: 2px solid var(--blue);
+  border-bottom: 0;
+  border-radius: 90px 90px 0 0;
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+
+@media (max-width: 800px) {
+  .homepage-gallery-teaser {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #gallery-page {
+    padding-top: 112px;
+  }
+
+  .gallery-page-section {
+    padding: 58px 14px 76px;
+  }
+
+  .gallery-page-intro {
+    margin-bottom: 42px;
+  }
+
+  .gallery-page-intro h1 {
+    font-size: clamp(4.5rem, 19vw, 7rem);
+  }
+
+  .gallery-page-collage {
+    padding: 12px 2px 28px;
+  }
+
+  .gallery-page-collage::before {
+    top: -18px;
+    left: 2%;
+    width: 96px;
+    height: 96px;
+  }
+
+  .gallery-page-collage::after {
+    width: 112px;
+    height: 54px;
+    right: 0;
+  }
+
+  .gallery-page-collage .gallery-grid {
+    grid-auto-rows: clamp(38px, 10vw, 56px);
+    gap: 11px;
+  }
+
+  .gallery-page-collage .gallery-item {
+    padding: 6px;
+    box-shadow: 5px 5px 0 var(--blue);
+  }
+
+  .gallery-page-collage .gallery-item-1::before,
+  .gallery-page-collage .gallery-item-6::before,
+  .gallery-page-collage .gallery-item-8::before {
+    top: -14px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .gallery-orbit-one {
+    width: 64px;
+    height: 26px;
+    left: -8px;
+  }
+
+  .gallery-orbit-two {
+    width: 42px;
+    height: 42px;
+    right: -6px;
+  }
+
+  .gallery-arch {
+    width: 48px;
+    height: 78px;
+    right: 6%;
+  }
+}
