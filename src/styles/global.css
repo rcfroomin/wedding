@@ -3259,25 +3259,16 @@ body {
 }
 
 
-/* WOMEN'S ATTIRE — GARDEN EDITORIAL COLLAGE */
+
+/* WOMEN'S ATTIRE — TRANSPARENT GARDEN COLLAGE REFINEMENT */
 #womens-attire {
-  --garden-ink: #293246;
-}
-
-#womens-attire .attire-section-heading {
-  position: relative;
-  z-index: 4;
-}
-
-#womens-attire .attire-section-heading .eyebrow,
-#womens-attire .attire-section-heading h2 {
-  color: var(--garden-ink);
-  text-shadow: 0 1px 12px rgba(248, 244, 237, 0.62);
+  --garden-ink: #302b27;
 }
 
 #womens-attire .attire-product-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 34px 0;
+  column-gap: 0;
+  row-gap: clamp(4px, 1.2vw, 18px);
   align-items: start;
 }
 
@@ -3287,23 +3278,16 @@ body {
   isolation: isolate;
 }
 
-#womens-attire .attire-product:nth-child(3n + 1) {
-  z-index: 1;
-}
+#womens-attire .attire-product:nth-child(3n + 1) { z-index: 1; }
+#womens-attire .attire-product:nth-child(3n + 2) { z-index: 3; }
+#womens-attire .attire-product:nth-child(3n) { z-index: 2; }
 
-#womens-attire .attire-product:nth-child(3n + 2) {
-  z-index: 3;
-}
-
-#womens-attire .attire-product:nth-child(3n) {
-  z-index: 2;
-}
-
+/* The transparent PNGs now sit directly over the single garden photograph. */
 #womens-attire .attire-product-image {
-  width: 122%;
+  width: 145%;
   height: clamp(390px, 43vw, 590px);
   aspect-ratio: auto;
-  margin-left: -11%;
+  margin-left: -22.5%;
   padding: 0;
   overflow: visible;
   border: 0;
@@ -3316,24 +3300,24 @@ body {
   object-fit: contain !important;
   object-position: center bottom;
   mix-blend-mode: normal;
-  filter: drop-shadow(0 9px 8px rgba(38, 43, 35, 0.12));
+  filter: drop-shadow(0 9px 8px rgba(38, 43, 35, 0.14));
   transition: transform 450ms ease, filter 450ms ease;
 }
 
 #womens-attire .attire-product:nth-child(3n + 1) .attire-product-image img {
-  transform: translateY(12px) rotate(-2deg) scale(0.96);
+  transform: translateY(16px) rotate(-2deg) scale(.96);
 }
 
 #womens-attire .attire-product:nth-child(3n + 2) .attire-product-image img {
-  transform: translateY(-3px) rotate(1deg) scale(1.04);
+  transform: translateY(-8px) rotate(1deg) scale(1.04);
 }
 
 #womens-attire .attire-product:nth-child(3n) .attire-product-image img {
-  transform: translateY(18px) rotate(2deg) scale(0.94);
+  transform: translateY(22px) rotate(2deg) scale(.94);
 }
 
 #womens-attire .attire-product:hover .attire-product-image img {
-  filter: drop-shadow(0 13px 10px rgba(38, 43, 35, 0.17));
+  filter: drop-shadow(0 13px 10px rgba(38, 43, 35, .2));
 }
 
 #womens-attire .attire-product-info {
@@ -3342,12 +3326,18 @@ body {
   width: 100%;
   padding: 8px 8px 0;
   color: var(--garden-ink);
-  text-shadow: 0 1px 10px rgba(248, 244, 237, 0.7);
+  text-shadow: 0 1px 10px rgba(248, 244, 237, .88);
 }
 
 #womens-attire .attire-product-brand,
+#womens-attire .attire-product-info h3,
 #womens-attire .attire-product-description {
-  color: #343c43;
+  color: var(--garden-ink);
+}
+
+#womens-attire .attire-product-brand {
+  font-weight: 700;
+  letter-spacing: .2em;
 }
 
 #womens-attire .attire-shop-link,
@@ -3360,52 +3350,50 @@ body {
   border-color: currentColor;
 }
 
-#womens-attire::before {
-  background-size: cover;
-  background-position: center top;
-  opacity: 0.72;
-}
-
 @media (max-width: 900px) {
   #womens-attire .attire-product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 0;
+    row-gap: 18px;
   }
 
   #womens-attire .attire-product-image {
-    width: 116%;
+    width: 136%;
     height: clamp(340px, 56vw, 470px);
-    margin-left: -8%;
+    margin-left: -18%;
+  }
+
+  #womens-attire .attire-product:nth-child(odd) { z-index: 2; }
+  #womens-attire .attire-product:nth-child(even) { z-index: 1; }
+
+  #womens-attire .attire-product:nth-child(odd) .attire-product-image img {
+    transform: translateY(10px) rotate(-1.5deg) scale(.97);
+  }
+
+  #womens-attire .attire-product:nth-child(even) .attire-product-image img {
+    transform: translateY(-8px) rotate(1.5deg) scale(1.03);
   }
 }
 
 @media (max-width: 600px) {
   #womens-attire .attire-product-grid {
-    gap: 28px 0;
+    gap: 12px 0;
   }
 
   #womens-attire .attire-product-image {
-    width: 122%;
-    height: clamp(300px, 82vw, 390px);
-    margin-left: -11%;
-  }
-
-  #womens-attire .attire-product:nth-child(odd) .attire-product-image img {
-    transform: translateY(9px) rotate(-1.5deg) scale(0.96);
-  }
-
-  #womens-attire .attire-product:nth-child(even) .attire-product-image img {
-    transform: translateY(-2px) rotate(1.5deg) scale(1.02);
-  }
-
-  #womens-attire::before {
-    background-size: auto 100%;
-    background-position: center top;
-    opacity: 0.48;
+    width: 142%;
+    height: clamp(290px, 82vw, 390px);
+    margin-left: -21%;
   }
 
   #womens-attire .attire-product-info {
     padding-right: 5px;
     padding-left: 5px;
+  }
+
+  #womens-attire::before {
+    background-size: auto 100%;
+    background-position: center top;
+    opacity: .5;
   }
 }
