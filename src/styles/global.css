@@ -746,7 +746,7 @@ a {
   }
 }
 
-/* Gallery: bold 1960s magazine layout with atomic-age graphic motifs */
+/* Gallery */
 #gallery {
   position: relative;
   overflow: hidden;
@@ -960,7 +960,6 @@ a {
   transform: rotate(18deg);
 }
 
-/* Editorial color bars create a printed-magazine rhythm */
 .gallery-item-2,
 .gallery-item-5,
 .gallery-item-10 {
@@ -2022,11 +2021,9 @@ a {
 
 
 /* =========================================
-   EDITORIAL HOLLYWOOD / MID-CENTURY REDESIGN
-   First pass: palette, typography, homepage hero
+   EDITORIAL REDESIGN
 ========================================= */
 :root {
-  /* Quiet, photo-first palette */
   --ink: #2B3245;
   --cream: #f3efe7;
   --paper: #faf8f2;
@@ -2466,7 +2463,7 @@ body {
   transform: translate(3px, -3px);
 }
 
-/* Dedicated gallery page: a playful 1960s magazine spread */
+/* Dedicated gallery page */
 #gallery-page {
   min-height: 100vh;
   padding-top: 82px;
@@ -2714,7 +2711,6 @@ body {
     right: 6%;
   }
 }
-
 
 #details {
   position: relative;
