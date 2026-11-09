@@ -3244,3 +3244,19 @@ body {
 .attire-hero::before {
   display: none;
 }
+
+
+/* Full-bleed men's section, matching the women's full-width treatment */
+#mens-attire {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: max(5vw, 24px);
+  padding-right: max(5vw, 24px);
+}
+
+/* Deepen the hero's decorative star for contrast over the photograph. */
+.attire-hero::after {
+  background: #526f7b;
+}
