@@ -2749,8 +2749,8 @@ body {
 }
 
 #details .detail-card {
-  background: rgba(250, 248, 242, 0.78);
-  backdrop-filter: blur(2px);
+  background: rgba(250, 248, 242, 0.68);
+  backdrop-filter: blur(1px);
 }
 
 @media (max-width: 800px) {
@@ -2763,6 +2763,6 @@ body {
   }
 
   #details .detail-card {
-    background: rgba(250, 248, 242, 0.86);
+    background: rgba(250, 248, 242, 0.26);
   }
 }
