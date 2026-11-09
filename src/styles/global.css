@@ -3135,8 +3135,7 @@ body {
 }
 
 
-/* Women's looks: return to a calm, even three-column lookbook grid.
-   Keep the men's layout and its blue treatment unchanged. */
+/* Women's Looks */
 #womens-attire .attire-product-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(28px, 3vw, 42px) clamp(18px, 2.2vw, 30px);
@@ -3163,8 +3162,6 @@ body {
   }
 }
 
-/* Replace the stray outlined square in the intro with a small sunburst
-   inspired by mid-century print graphics. */
 .attire-hero::after {
   width: clamp(86px, 10vw, 132px);
   height: clamp(86px, 10vw, 132px);
