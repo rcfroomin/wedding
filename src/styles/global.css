@@ -3184,14 +3184,10 @@ body {
   }
 }
 
-
-/* Keep every women's look on one consistent warm-cream image ground. */
 #womens-attire .attire-product-image {
   background: #e9e3d7;
 }
 
-
-/* Soft repeating floral-paper layer across the women's lookbook */
 #womens-attire {
   position: relative;
   isolation: isolate;
@@ -3207,7 +3203,7 @@ body {
   background-repeat: repeat;
   background-position: center top;
   background-size: 440px auto;
-  opacity: 0.22;
+  opacity: 0.8;
   pointer-events: none;
 }
 
