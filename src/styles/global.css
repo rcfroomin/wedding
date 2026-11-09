@@ -2716,8 +2716,6 @@ body {
 }
 
 
-/* Details: retain the existing two-by-two information grid, with the
-   engagement photograph as a softened full-section backdrop. */
 #details {
   position: relative;
   isolation: isolate;
