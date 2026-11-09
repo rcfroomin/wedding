@@ -2714,3 +2714,55 @@ body {
     right: 6%;
   }
 }
+
+
+/* Details: retain the existing two-by-two information grid, with the
+   engagement photograph as a softened full-section backdrop. */
+#details {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+#details::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background-image: url("/images/cameraCouple.jpg");
+  background-size: cover;
+  background-position: center 48%;
+  background-repeat: no-repeat;
+}
+
+#details::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgba(243, 239, 231, 0.76);
+}
+
+#details > .section-inner {
+  position: relative;
+  z-index: 1;
+}
+
+#details .detail-card {
+  background: rgba(250, 248, 242, 0.94);
+  backdrop-filter: blur(3px);
+}
+
+@media (max-width: 800px) {
+  #details::before {
+    background-position: center center;
+  }
+
+  #details::after {
+    background: rgba(243, 239, 231, 0.82);
+  }
+
+  #details .detail-card {
+    background: rgba(250, 248, 242, 0.96);
+  }
+}
