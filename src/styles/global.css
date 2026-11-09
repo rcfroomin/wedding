@@ -3265,6 +3265,17 @@ body {
   --garden-ink: #302b27;
 }
 
+#womens-attire .attire-section-heading {
+  position: relative;
+  z-index: 4;
+}
+
+#womens-attire .attire-section-heading .eyebrow,
+#womens-attire .attire-section-heading h2 {
+  color: var(--garden-ink);
+  text-shadow: 0 1px 12px rgba(248, 244, 237, .78);
+}
+
 #womens-attire .attire-product-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 0;
