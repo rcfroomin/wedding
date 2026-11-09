@@ -3191,8 +3191,9 @@ body {
 }
 
 
-/* Botanical accent for the women's lookbook */
+/* Soft repeating floral-paper layer across the women's lookbook */
 #womens-attire {
+  position: relative;
   isolation: isolate;
   overflow: hidden;
 }
@@ -3200,22 +3201,24 @@ body {
 #womens-attire::before {
   content: "";
   position: absolute;
-  z-index: -1;
-  top: 18px;
-  right: clamp(12px, 3vw, 44px);
-  width: clamp(150px, 22vw, 310px);
-  height: clamp(150px, 22vw, 310px);
-  background: url("/images/floralBackground.png") center / contain no-repeat;
-  opacity: 0.82;
+  z-index: 0;
+  inset: 0;
+  background-image: url("/images/floralBackground.png");
+  background-repeat: repeat;
+  background-position: center top;
+  background-size: 440px auto;
+  opacity: 0.22;
   pointer-events: none;
+}
+
+#womens-attire > * {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 760px) {
   #womens-attire::before {
-    top: 12px;
-    right: -18px;
-    width: 150px;
-    height: 150px;
-    opacity: 0.72;
+    background-size: 300px auto;
+    opacity: 0.18;
   }
 }
