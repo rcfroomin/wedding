@@ -2814,7 +2814,7 @@ body {
 .attire-hero h1 em {
   color: var(--ink);
   text-decoration: underline;
-  text-decoration-color: var(--blue);
+  text-decoration-color: #526f7b;
   text-decoration-thickness: 0.09em;
   text-underline-offset: 0.08em;
 }
@@ -2897,7 +2897,7 @@ body {
 }
 
 .attire-section-heading .eyebrow {
-  color: var(--muted);
+  color: var(--ink);
   letter-spacing: 0.2em;
 }
 
@@ -3199,11 +3199,11 @@ body {
   position: absolute;
   z-index: 0;
   inset: 0;
-  background-image: url("/images/floralBackground.png");
-  background-repeat: repeat;
+  background-image: url("/images/gardenBackground.png");
+  background-repeat: no-repeat; 
   background-position: center top;
-  background-size: 440px auto;
-  opacity: 0.8;
+  background-size: 1525px auto;
+  opacity: 0.65;
   pointer-events: none;
 }
 
@@ -3235,18 +3235,16 @@ body {
 .attire-hero {
   background:
     linear-gradient(
-      rgba(247, 244, 236, 0.66),
-      rgba(247, 244, 236, 0.78)
+      rgba(247, 244, 236, 0.76),
+      rgba(247, 244, 236, 0.88)
     ),
-    url("/images/onTheBar.jpeg") center 51% / cover no-repeat;
+    url("/images/cameraCouple.jpg") center 50% / cover no-repeat;
 }
 
 .attire-hero::before {
   display: none;
 }
 
-
-/* Full-bleed men's section, matching the women's full-width treatment */
 #mens-attire {
   max-width: none;
   width: 100%;
@@ -3256,7 +3254,6 @@ body {
   padding-right: max(5vw, 24px);
 }
 
-/* Deepen the hero's decorative star for contrast over the photograph. */
 .attire-hero::after {
   background: #526f7b;
 }
