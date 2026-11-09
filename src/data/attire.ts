@@ -21,7 +21,7 @@ export const attireProducts: AttireProduct[] = [
     description: "A romantic mint green dress with a modern silhouette.",
     price: "$129",
     image: "/images/BirdyGreyVerandaDress.png",
-    imageAlt: "Floral midi dress in a garden-party color palette",
+    imageAlt: "Floral midi dress in a garden party color palette",
     productUrl: "https://www.birdygrey.com/products/veranda-dress-mint-green",
   },
 
