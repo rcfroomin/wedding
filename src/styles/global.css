@@ -2766,7 +2766,7 @@ body {
 }
 
 
-/* ATTIRE LOOKBOOK — mid-century fashion editorial */
+/* ATTIRE LOOKBOOK */
 .attire-page {
   background: var(--cream);
   color: var(--ink);
@@ -2879,15 +2879,6 @@ body {
 
 .attire-note-copy p {
   max-width: 660px;
-}
-
-.attire-affiliate-note {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 18px clamp(24px, 5vw, 72px) 0;
-  color: var(--muted);
-  font-size: 0.68rem;
-  letter-spacing: 0.025em;
 }
 
 .attire-products-section {
