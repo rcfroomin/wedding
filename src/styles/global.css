@@ -3187,3 +3187,9 @@ body {
     height: 76px;
   }
 }
+
+
+/* Keep every women's look on one consistent warm-cream image ground. */
+#womens-attire .attire-product-image {
+  background: #e9e3d7;
+}
