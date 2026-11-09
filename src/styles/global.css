@@ -3133,3 +3133,60 @@ body {
     flex-direction: column;
   }
 }
+
+
+/* Women's looks: return to a calm, even three-column lookbook grid.
+   Keep the men's layout and its blue treatment unchanged. */
+#womens-attire .attire-product-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 42px) clamp(18px, 2.2vw, 30px);
+}
+
+#womens-attire .attire-product {
+  grid-column: auto !important;
+}
+
+#womens-attire .attire-product-image {
+  aspect-ratio: 3 / 4;
+}
+
+@media (max-width: 900px) {
+  #womens-attire .attire-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  #womens-attire .attire-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 14px;
+  }
+}
+
+/* Replace the stray outlined square in the intro with a small sunburst
+   inspired by mid-century print graphics. */
+.attire-hero::after {
+  width: clamp(86px, 10vw, 132px);
+  height: clamp(86px, 10vw, 132px);
+  right: max(7vw, calc((100vw - 1360px) / 2));
+  bottom: 13%;
+  border: 0;
+  background: var(--blue);
+  opacity: 0.88;
+  clip-path: polygon(
+    50% 0%, 59% 29%, 82% 9%, 75% 38%,
+    100% 50%, 75% 62%, 82% 91%, 59% 71%,
+    50% 100%, 41% 71%, 18% 91%, 25% 62%,
+    0% 50%, 25% 38%, 18% 9%, 41% 29%
+  );
+  transform: rotate(12deg);
+}
+
+@media (max-width: 760px) {
+  .attire-hero::after {
+    right: 5%;
+    bottom: 7%;
+    width: 76px;
+    height: 76px;
+  }
+}
