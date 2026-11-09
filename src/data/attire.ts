@@ -118,4 +118,15 @@ export const attireProducts: AttireProduct[] = [
     imageAlt: "Pastel yellow contemporary suit",
     productUrl: "https://www.menswearhouse.com/p/modern-fit-suit-tmw-3bru?clearance=true&color=yellow&size=42&length=short&CAWELAID=120259610002294891&CAGPSPN=pla&CAAGID=&CATCI=&adtype=pla&product_channel=online&product_click_id=TMW3BT442108&store_code_id=&gad_source=4&gad_campaignid=20493046214&gbraid=0AAAAADipZBOdJiBUDsyM96oE2kp9u9HVL&gclid=Cj0KCQjw3YvXBhCDARIsAKB-ox_rgiGh0FUi_0MCR9nqN5ri6YbaAnT26RLyNrx00lERlfH73dTOrSYaAvJ-EALw_wcB",
   },
+  {
+    id: "suit-04-placeholder",
+    category: "men",
+    name: "More suit inspiration coming soon",
+    brand: "COMING SOON",
+    description: "",
+    price: "",
+    image: "",
+    imageAlt: "",
+    productUrl: "",
+  },
 ];
