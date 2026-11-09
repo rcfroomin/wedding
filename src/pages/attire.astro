@@ -100,7 +100,7 @@ const accessoryProducts = attireProducts.filter(
           <div class="attire-section-heading">
             <div>
               <p class="eyebrow">01 / FOR THE LADIES</p>
-              <h2>Pretty in print.</h2>
+              <h2>The Dress Edit</h2>
             </div>
           </div>
 
@@ -118,7 +118,7 @@ const accessoryProducts = attireProducts.filter(
                     ) : (
                       <div class="attire-image-placeholder">
                         <span>LOOK {String(index + 1).padStart(2, "0")}</span>
-                        <p>Add product image</p>
+                        <p>{product.id === "suit-04-placeholder" ? "Suit suggestion coming soon" : "Add product image"}</p>
                       </div>
                     )}
                   </div>
@@ -164,7 +164,7 @@ const accessoryProducts = attireProducts.filter(
           <div class="attire-section-heading">
             <div>
               <p class="eyebrow">02 / FOR THE GENTLEMEN</p>
-              <h2>Color me classic.</h2>
+              <h2>The Suit Edit</h2>
             </div>
           </div>
 
